@@ -43,7 +43,7 @@ entry("sbrk");
 entry("pause");
 entry("uptime");
 
-// my system calls
+# my system calls
 entry("getnice");
 entry("setnice");
 entry("ps");

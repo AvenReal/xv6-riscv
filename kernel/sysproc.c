@@ -108,72 +108,67 @@ sys_uptime(void)
   return xticks;
 }
 
-// custom local function used to get the process struct from a pid
-struct proc* get_proc_from_pid()
+
 
 // my system calls
-uint64
-sys_getnice(void) {
+uint64 sys_getnice(void) {
   int pid;
   argint(0, &pid);
 
-  struct *proc = get_proc_from_pid(pid);
+  struct proc *proc = get_proc_from_pid(pid);
 
   if(proc == 0) {
 	return -1;
   }
 
   int nice = proc->nice;
-
-  release(&proc->lock);
   return nice;
 }
 
-uint64
-sys_setnice(void) {
+uint64 sys_setnice(void) {
   int pid, value;
   argint(0, &pid);
   argint(1, &value);
 
-  struct *proc = get_proc_from_pid(pid);
+  struct proc *proc = get_proc_from_pid(pid);
 
   if (proc == 0 || value < 0 || value > 39) {
 	return -1;
   }
 
   proc->nice = value;
-
-  release(&proc->lock);
   return 0;
 }
 
-uint64
-sys_ps(void) {
+uint64 sys_ps(void) {
+  const char* procstate_string[] = {"UNUSED\t", "USED\t", "SLEEPING", "RUNNABLE", "RUNNING\t", "ZOMBIE\t"};
   int pid;
   argint(0, &pid);
 
-  printf("name\tpid\tstate\tpriority")
   if (pid == 0) {
-    for(int i = 0, struct proc* = get_proc_from_index(i); i < NPROC; i++){
-      printf("%s\t\t%d\t\t%s\t\t%d\n", proc->name, proc->pid, procstate_string[proc->state], proc->nice);
-      release(&proc->lock);
+    printf("name\tpid\tstate\t\tpriority\n");
+    for(int i = 0; i < NPROC; i++){
+      struct proc *proc = get_proc_from_index(i);
+      if(proc->pid != 0) {
+        printf("%s\t%d\t%s\t%d\n", proc->name, proc->pid, procstate_string[proc->state], proc->nice);
+      }
     }
   }
   else{
-    struct *proc = get_proc_from_pid(pid);
-    printf("%s\t\t%d\t\t%s\t\t%d\n", proc->name, proc->pid, procstate_string[proc->state], proc->nice);
-    release(&proc->lock);
+    struct proc *proc = get_proc_from_pid(pid);
+    if(proc != 0 && proc->pid != 0){
+      printf("name\tpid\tstate\t\tpriority\n");
+      printf("%s\t%d\t%s\t%d\n", proc->name, proc->pid, procstate_string[proc->state], proc->nice);
+    }
   }
   return 0;
 }
 
-uint64
-sys_meminfo(void) {
+uint64 sys_meminfo(void) {
   return 0;
 }
 
-uint64
-sys_waitpid(void) {
+uint64 sys_waitpid(void) {
   int pid;
   argint(0, &pid);
 

@@ -712,5 +712,5 @@ get_proc_from_index(int index) {
   if (index < 0 || index >= NPROC) {
     return 0;
   }
-  return proc[index];
+  return &proc[index];
 }
