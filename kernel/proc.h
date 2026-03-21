@@ -105,3 +105,9 @@ struct proc {
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
 };
+
+
+// Custom function helping getting the struct proc from a PID
+// You MUST release(&p->lock); after finishing using the struct proc !
+struct proc*
+get_proc_from_pid(int pid)
