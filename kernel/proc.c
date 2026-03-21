@@ -702,7 +702,6 @@ uint64 getnice(int pid) {
   }
 
   int nice = proc->nice;
-  release(&proc->lock);
   return nice;
 }
 
@@ -727,7 +726,7 @@ uint64 ps(int pid) {
     printf("name\tpid\tstate\t\tpriority\n");
     for(int i = 0; i < NPROC; i++){
       struct proc *proc = get_proc_from_index(i);
-      if(proc->pid != 0) {
+      if(proc != 0 && proc->pid != 0) {
         printf("%s\t%d\t%s\t%d\n", proc->name, proc->pid, procstate_string[proc->state], proc->nice);
       }
     }

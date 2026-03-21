@@ -129,7 +129,7 @@ uint64 sys_ps(void) {
   int pid;
   argint(0, &pid);
 
-  return pd(pid);
+  return ps(pid);
 }
 
 uint64 sys_meminfo(void) {

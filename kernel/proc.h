@@ -109,6 +109,15 @@ struct proc {
 };
 
 
+// Custom syscall
+#pragma once
+uint64 getnice(int pid);
+uint64 setnice(int pid, int value);
+uint64 ps(int pid);
+uint64 meminfo(void);
+uint64 waitpid(int pid);
+
+
 // Custom function helping getting the struct proc from a PID
 // You MUST release(&p->lock); after finishing using the struct proc !
 struct proc* get_proc_from_pid(int pid);
