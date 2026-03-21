@@ -25,6 +25,7 @@ char* sys_sbrk(int,int);
 int pause(int);
 int uptime(void);
 
+// my system calls
 int getnice(int pid);
 int setnice(int pid, int value);
 int ps(int pid);
