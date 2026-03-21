@@ -116,6 +116,17 @@ uint64
 sys_getnice(void) {
   int pid;
   argint(0, &pid);
+
+  struct *proc = get_proc_from_pid(pid);
+
+  if(proc == 0) {
+	return -1;
+  }
+
+  int nice = proc->nice;
+
+  release(&proc->lock);
+  return nice;
 }
 
 uint64
@@ -123,22 +134,49 @@ sys_setnice(void) {
   int pid, value;
   argint(0, &pid);
   argint(1, &value);
+
+  struct *proc = get_proc_from_pid(pid);
+
+  if (proc == 0 || value < 0 || value > 39) {
+	return -1;
+  }
+
+  proc->nice = value;
+
+  release(&proc->lock);
+  return 0;
 }
 
 uint64
 sys_ps(void) {
   int pid;
   argint(0, &pid);
+
+  printf("name\tpid\tstate\tpriority")
+  if (pid == 0) {
+    for(int i = 0, struct proc* = get_proc_from_index(i); i < NPROC; i++){
+      printf("%s\t\t%d\t\t%s\t\t%d\n", proc->name, proc->pid, procstate_string[proc->state], proc->nice);
+      release(&proc->lock);
+    }
+  }
+  else{
+    struct *proc = get_proc_from_pid(pid);
+    printf("%s\t\t%d\t\t%s\t\t%d\n", proc->name, proc->pid, procstate_string[proc->state], proc->nice);
+    release(&proc->lock);
+  }
+  return 0;
 }
 
 uint64
 sys_meminfo(void) {
-
+  return 0;
 }
 
 uint64
 sys_waitpid(void) {
   int pid;
   argint(0, &pid);
+
+ return 0;
 }
 

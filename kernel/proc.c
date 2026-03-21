@@ -124,6 +124,7 @@ allocproc(void)
 found:
   p->pid = allocpid();
   p->state = USED;
+  p->nice = 20; // set default nice value;
 
   // Allocate a trapframe page.
   if((p->trapframe = (struct trapframe *)kalloc()) == 0){
@@ -703,4 +704,13 @@ get_proc_from_pid(int pid)
     }
   }
   return 0;
+}
+
+// Custom function that get a process from it's index in the proc[] array
+struct proc*
+get_proc_from_index(int index) {
+  if (index < 0 || index >= NPROC) {
+    return 0;
+  }
+  return proc[index];
 }

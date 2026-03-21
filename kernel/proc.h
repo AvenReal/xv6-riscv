@@ -80,6 +80,7 @@ struct trapframe {
 };
 
 enum procstate { UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
+const char* procstate_strings[] = {"UNUSED", "USED", "SLEEPING", "RUNNABLE", "RUNNING", "ZOMBIE"};
 
 // Per-process state
 struct proc {
@@ -104,10 +105,13 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+  int nice; 				   // The nice value of the process
 };
 
 
 // Custom function helping getting the struct proc from a PID
 // You MUST release(&p->lock); after finishing using the struct proc !
-struct proc*
-get_proc_from_pid(int pid)
+struct proc* get_proc_from_pid(int pid)
+
+// Custom function that get a process from it's index in the proc[] array
+struct proc* get_proc_from_index(int index)
