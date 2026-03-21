@@ -25,6 +25,13 @@ char* sys_sbrk(int,int);
 int pause(int);
 int uptime(void);
 
+int getnice(int pid);
+int setnice(int pid, int value);
+int ps(int pid);
+int meminfo(void);
+int waitpid(int pid);
+
+
 // ulib.c
 int stat(const char*, struct stat*);
 char* strcpy(char*, const char*);

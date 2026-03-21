@@ -107,3 +107,34 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+uint64
+sys_getnice(void) {
+  int pid;
+  argint(0, &pid);
+}
+
+uint64
+sys_setnice(void) {
+  int pid, value;
+  argint(0, &pid);
+  argint(1, &value);
+}
+
+uint64
+sys_ps(void) {
+  int pid;
+  argint(0, &pid);
+}
+
+uint64
+sys_meminfo(void) {
+
+}
+
+uint64
+sys_waitpid(void) {
+  int pid;
+  argint(0, &pid);
+}
+

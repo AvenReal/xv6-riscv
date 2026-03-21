@@ -146,6 +146,8 @@ UPROGS=\
 	$U/_forphan\
 	$U/_dorphan\
 
+UPROGS += _mytest
+
 fs.img: mkfs/mkfs README $(UPROGS)
 	mkfs/mkfs fs.img README $(UPROGS)
 
