@@ -688,3 +688,19 @@ procdump(void)
     printf("\n");
   }
 }
+
+
+// Custom function helping getting the struct proc from a PID
+// You MUST release(&p->lock); after finishing using the struct proc !
+struct proc*
+get_proc_from_pid(int pid)
+{
+  struct proc *p;
+
+  for(p = proc; p < &proc[NPROC]; p++){
+    if(p->pid == pid){
+      return p;
+    }
+  }
+  return 0;
+}

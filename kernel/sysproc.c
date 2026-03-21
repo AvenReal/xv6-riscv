@@ -108,6 +108,9 @@ sys_uptime(void)
   return xticks;
 }
 
+// custom local function used to get the process struct from a pid
+struct proc* get_proc_from_pid()
+
 // my system calls
 uint64
 sys_getnice(void) {
