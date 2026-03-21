@@ -110,19 +110,11 @@ sys_uptime(void)
 
 
 
-// my system calls
 uint64 sys_getnice(void) {
   int pid;
   argint(0, &pid);
 
-  struct proc *proc = get_proc_from_pid(pid);
-
-  if(proc == 0) {
-	return -1;
-  }
-
-  int nice = proc->nice;
-  return nice;
+  return getnice(pid);
 }
 
 uint64 sys_setnice(void) {
@@ -130,48 +122,24 @@ uint64 sys_setnice(void) {
   argint(0, &pid);
   argint(1, &value);
 
-  struct proc *proc = get_proc_from_pid(pid);
-
-  if (proc == 0 || value < 0 || value > 39) {
-	return -1;
-  }
-
-  proc->nice = value;
-  return 0;
+  return setnice(pid, value);
 }
 
 uint64 sys_ps(void) {
-  const char* procstate_string[] = {"UNUSED\t", "USED\t", "SLEEPING", "RUNNABLE", "RUNNING\t", "ZOMBIE\t"};
   int pid;
   argint(0, &pid);
 
-  if (pid == 0) {
-    printf("name\tpid\tstate\t\tpriority\n");
-    for(int i = 0; i < NPROC; i++){
-      struct proc *proc = get_proc_from_index(i);
-      if(proc->pid != 0) {
-        printf("%s\t%d\t%s\t%d\n", proc->name, proc->pid, procstate_string[proc->state], proc->nice);
-      }
-    }
-  }
-  else{
-    struct proc *proc = get_proc_from_pid(pid);
-    if(proc != 0 && proc->pid != 0){
-      printf("name\tpid\tstate\t\tpriority\n");
-      printf("%s\t%d\t%s\t%d\n", proc->name, proc->pid, procstate_string[proc->state], proc->nice);
-    }
-  }
-  return 0;
+  return pd(pid);
 }
 
 uint64 sys_meminfo(void) {
-  return 0;
+  return meminfo();
 }
 
 uint64 sys_waitpid(void) {
   int pid;
   argint(0, &pid);
 
- return 0;
+  return waitpid(pid);
 }
 

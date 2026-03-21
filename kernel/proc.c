@@ -691,8 +691,68 @@ procdump(void)
 }
 
 
+// my system calls
+uint64 getnice(int pid) {
+
+
+  struct proc *proc = get_proc_from_pid(pid);
+
+  if(proc == 0) {
+    return -1;
+  }
+
+  int nice = proc->nice;
+  release(&proc->lock);
+  return nice;
+}
+
+uint64 setnice(int pid, int value) {
+
+
+  struct proc *proc = get_proc_from_pid(pid);
+
+  if (proc == 0 || value < 0 || value > 39) {
+    return -1;
+  }
+
+  proc->nice = value;
+  return 0;
+}
+
+uint64 ps(int pid) {
+  const char* procstate_string[] = {"UNUSED\t", "USED\t", "SLEEPING", "RUNNABLE", "RUNNING\t", "ZOMBIE\t"};
+
+
+  if (pid == 0) {
+    printf("name\tpid\tstate\t\tpriority\n");
+    for(int i = 0; i < NPROC; i++){
+      struct proc *proc = get_proc_from_index(i);
+      if(proc->pid != 0) {
+        printf("%s\t%d\t%s\t%d\n", proc->name, proc->pid, procstate_string[proc->state], proc->nice);
+      }
+    }
+  }
+  else{
+    struct proc *proc = get_proc_from_pid(pid);
+    if(proc != 0 && proc->pid != 0){
+      printf("name\tpid\tstate\t\tpriority\n");
+      printf("%s\t%d\t%s\t%d\n", proc->name, proc->pid, procstate_string[proc->state], proc->nice);
+    }
+  }
+  return 0;
+}
+
+uint64 meminfo(void) {
+  return 0;
+}
+
+uint64 waitpid(int pid) {
+
+
+  return 0;
+}
+
 // Custom function helping getting the struct proc from a PID
-// You MUST release(&p->lock); after finishing using the struct proc !
 struct proc*
 get_proc_from_pid(int pid)
 {
@@ -712,5 +772,11 @@ get_proc_from_index(int index) {
   if (index < 0 || index >= NPROC) {
     return 0;
   }
-  return &proc[index];
+
+  struct proc *p = &proc[index];
+  if (p->pid == 0) {
+    return 0;
+  }
+
+  return p;
 }
