@@ -108,6 +108,7 @@ sys_uptime(void)
   return xticks;
 }
 
+// my system calls
 uint64
 sys_getnice(void) {
   int pid;

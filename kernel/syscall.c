@@ -133,6 +133,7 @@ static uint64 (*syscalls[])(void) = {
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
 
+  // my system calls
 [SYS_getnice] sys_getnice,
 [SYS_setnice] sys_setnice,
 [SYS_ps]      sys_ps,
