@@ -119,7 +119,6 @@ uint64 waitpid(int pid);
 
 
 // Custom function helping getting the struct proc from a PID
-// You MUST release(&p->lock); after finishing using the struct proc !
 struct proc* get_proc_from_pid(int pid);
 
 // Custom function that get a process from it's index in the proc[] array
