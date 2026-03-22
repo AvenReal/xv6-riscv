@@ -701,8 +701,7 @@ uint64 getnice(int pid) {
     return -1;
   }
 
-  int nice = proc->nice;
-  return nice;
+  return proc->nice;
 }
 
 uint64 setnice(int pid, int value) {
