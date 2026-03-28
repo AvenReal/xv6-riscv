@@ -111,11 +111,11 @@ struct proc {
 
 // Custom syscall
 #pragma once
-uint64 getnice(int pid);
-uint64 setnice(int pid, int value);
-uint64 ps(int pid);
-uint64 meminfo(void);
-uint64 waitpid(int pid);
+int getnice(int pid);
+int setnice(int pid, int value);
+void ps(int pid);
+int meminfo(void);
+int waitpid(int pid);
 
 
 // Custom function helping getting the struct proc from a PID
