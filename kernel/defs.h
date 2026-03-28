@@ -105,7 +105,7 @@ void            procdump(void);
 int             getnice(int pid);
 int             setnice(int pid, int value);
 void            ps(int pid);
-int             meminfo(int pid);
+int             meminfo();
 int             waitpid(int pid);
 
 // swtch.S
