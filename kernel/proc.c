@@ -692,7 +692,7 @@ procdump(void)
 
 
 // my system calls
-uint64 getnice(int pid) {
+int getnice(int pid) {
 
 
   struct proc *proc = get_proc_from_pid(pid);
@@ -704,7 +704,7 @@ uint64 getnice(int pid) {
   return proc->nice;
 }
 
-uint64 setnice(int pid, int value) {
+int setnice(int pid, int value) {
 
 
   struct proc *proc = get_proc_from_pid(pid);
@@ -717,7 +717,7 @@ uint64 setnice(int pid, int value) {
   return 0;
 }
 
-uint64 ps(int pid) {
+void ps(int pid) {
   const char* procstate_string[] = {"UNUSED\t", "USED\t", "SLEEPING", "RUNNABLE", "RUNNING\t", "ZOMBIE\t"};
 
 
@@ -740,7 +740,7 @@ uint64 ps(int pid) {
   return 0;
 }
 
-uint64 meminfo(void) {
+int meminfo(void) {
   acquire(&kmem.lock);
   struct run *r = kmem.freelist;
   uint64 count = 0;
@@ -755,7 +755,7 @@ uint64 meminfo(void) {
   return mem;
 }
 
-uint64 waitpid(int pid) {
+int waitpid(int pid) {
   struct proc *p;
   p = proc;
   acquire(&p->lock);
