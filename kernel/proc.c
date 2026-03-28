@@ -741,13 +741,41 @@ uint64 ps(int pid) {
 }
 
 uint64 meminfo(void) {
-  return 0;
+  acquire(&kmem.lock);
+  struct run *r = kmem.freelist;
+  uint64 count = 0;
+  while(r != NULL)
+  {
+        r = r->next;
+        count += 1;
+  }
+  release(&kmem.lock);
+  uin64 mem = count * PGSIZE;
+  printf("Avaiable memory : %d bytes", mem);
+  return mem;
 }
 
 uint64 waitpid(int pid) {
-
-
-  return 0;
+  struct proc *p;
+  p = proc;
+  acquire(&p->lock);
+  while (p < &proc[NPROC] && p->pid != pid)
+  {
+    release(&p->lock);
+    p+=1;
+    acquire(&p->lock);
+  }
+  if (p < &proc[NPROC] && p->state != UNUSED && p->parent == myproc())
+  {
+    sleep(&wait_lock, &wait_lock);
+    release(&p->lock);
+    if (p->state == ZOMBIE)
+    {
+      freeproc(&p);
+    }
+    return 0;
+  }
+  return -1;
 }
 
 // Custom function helping getting the struct proc from a PID
