@@ -737,45 +737,43 @@ void ps(int pid) {
       printf("%s\t%d\t%s\t%d\n", proc->name, proc->pid, procstate_string[proc->state], proc->nice);
     }
   }
-  return 0;
 }
 
 int meminfo(void) {
-  acquire(&kmem.lock);
-  struct run *r = kmem.freelist;
-  uint64 count = 0;
-  while(r != NULL)
-  {
-        r = r->next;
-        count += 1;
-  }
-  release(&kmem.lock);
-  uin64 mem = count * PGSIZE;
-  printf("Avaiable memory : %d bytes", mem);
+  int mem = avaiable_memory();
+  printf("Avaiable memory : %d bytes\n", mem);
   return mem;
 }
 
 int waitpid(int pid) {
   struct proc *p;
-  p = proc;
-  acquire(&p->lock);
-  while (p < &proc[NPROC] && p->pid != pid)
+  while (1)
   {
-    release(&p->lock);
-    p+=1;
-    acquire(&p->lock);
-  }
-  if (p < &proc[NPROC] && p->state != UNUSED && p->parent == myproc())
-  {
-    sleep(&wait_lock, &wait_lock);
-    release(&p->lock);
-    if (p->state == ZOMBIE)
+    p = proc;
+    acquire(&wait_lock);
+    int found = 0;
+    while(p < &proc[NPROC])
     {
-      freeproc(&p);
+      if (p->pid == pid && p->parent == myproc())
+      {
+	found = 1;
+        if (p->state == ZOMBIE)
+        {
+	  release(&wait_lock);
+          //freeproc(p); ?
+          return 0;
+        }
+
+        sleep(myproc(), &wait_lock);
+	break;
+      }
+      p++;
     }
-    return 0;
+    if (!found)
+    {
+      return -1;
+    }
   }
-  return -1;
 }
 
 // Custom function helping getting the struct proc from a PID

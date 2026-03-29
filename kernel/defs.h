@@ -59,6 +59,8 @@ void            ireclaim(int);
 void*           kalloc(void);
 void            kfree(void *);
 void            kinit(void);
+//custom call in kalloc.c
+int		avaiable_memory(void);
 
 // log.c
 void            initlog(int, struct superblock*);
