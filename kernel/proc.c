@@ -749,34 +749,17 @@ int meminfo(void) {
 }
 
 int waitpid(int pid) {
-  struct proc *p;
+	struct proc* p = get_proc_from_pid(pid);
 
-    p = proc;
+	if(p == 0 || p->parent != myproc()){
+		return -1;
+	}
 
-    int found = 0;
-    while(p < &proc[NPROC])
-    {
-      if (p->pid == pid && p->parent == myproc())
-      {
-	      found = 1;
-        if (p->state == ZOMBIE)
-        {
-	        // release(&wait_lock);
-          // freeproc(p); ?
-          return 0;
-        }
-        acquire(&wait_lock);
-        sleep(myproc(), &wait_lock);
-        release(&wait_lock);
-	      break;
-      }
-      p++;
-    }
-    if (!found)
-    {
-      return -1;
-    }
-  return 0;
+	acquire(&wait_lock);
+    sleep(myproc(), &wait_lock);
+    release(&wait_lock);
+
+	return 0;
 }
 
 // Custom function helping getting the struct proc from a PID
