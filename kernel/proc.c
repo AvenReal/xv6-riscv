@@ -743,7 +743,7 @@ void ps(int pid) {
 }
 
 int meminfo(void) {
-  int mem = avaiable_memory();
+  int mem = available_memory();
   printf("Avaiable memory : %d bytes\n", mem);
   return mem;
 }
