@@ -750,10 +750,9 @@ int meminfo(void) {
 
 int waitpid(int pid) {
   struct proc *p;
-  while (1)
-  {
+
     p = proc;
-    // acquire(&wait_lock);
+
     int found = 0;
     while(p < &proc[NPROC])
     {
@@ -766,8 +765,9 @@ int waitpid(int pid) {
           // freeproc(p); ?
           return 0;
         }
-
+        acquire(&wait_lock);
         sleep(myproc(), &wait_lock);
+        release(&wait_lock);
 	      break;
       }
       p++;
@@ -776,7 +776,7 @@ int waitpid(int pid) {
     {
       return -1;
     }
-  }
+  return 0;
 }
 
 // Custom function helping getting the struct proc from a PID
