@@ -713,7 +713,10 @@ int setnice(int pid, int value) {
     return -1;
   }
 
+  acquire(&proc->lock);
   proc->nice = value;
+  release(&proc->lock);
+
   return 0;
 }
 
@@ -750,22 +753,22 @@ int waitpid(int pid) {
   while (1)
   {
     p = proc;
-    acquire(&wait_lock);
+    // acquire(&wait_lock);
     int found = 0;
     while(p < &proc[NPROC])
     {
       if (p->pid == pid && p->parent == myproc())
       {
-	found = 1;
+	      found = 1;
         if (p->state == ZOMBIE)
         {
-	  release(&wait_lock);
-          //freeproc(p); ?
+	        // release(&wait_lock);
+          // freeproc(p); ?
           return 0;
         }
 
         sleep(myproc(), &wait_lock);
-	break;
+	      break;
       }
       p++;
     }
