@@ -82,7 +82,7 @@ kalloc(void)
 }
 
 int
-avaiable_memory(void)
+available_memory(void)
 {	
   acquire(&kmem.lock);
   struct run *r = kmem.freelist;
