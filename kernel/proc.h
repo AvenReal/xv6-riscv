@@ -105,7 +105,13 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+
   int nice; 				   // The nice value of the process
+  uint64 runtime;			   // Actual runtime ticks
+  uint64 vruntime;			   // Virtual runtime
+  uint64 vdeadline;  		   // Virtual deadline
+  int timeslice;			   // Remaining time slice (default = 5)
+  int is_eligible			   // Egibility flag
 };
 
 

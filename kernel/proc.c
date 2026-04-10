@@ -124,7 +124,13 @@ allocproc(void)
 found:
   p->pid = allocpid();
   p->state = USED;
+
   p->nice = 20; // set default nice value;
+  p->runtime = 0;
+  p->pruntime = 0;
+  p->vdeadline = 0;
+  p->timeslice = 5;
+  p->is_eligible = 1;
 
   // Allocate a trapframe page.
   if((p->trapframe = (struct trapframe *)kalloc()) == 0){
