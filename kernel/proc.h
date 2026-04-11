@@ -111,7 +111,7 @@ struct proc {
   uint64 vruntime;			   // Virtual runtime
   uint64 vdeadline;  		   // Virtual deadline
   int timeslice;			   // Remaining time slice (default = 5)
-  int is_eligible			   // Egibility flag
+  int is_eligible;			   // Egibility flag
 };
 
 

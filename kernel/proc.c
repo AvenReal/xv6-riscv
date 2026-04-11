@@ -15,6 +15,12 @@ struct proc *initproc;
 int nextpid = 1;
 struct spinlock pid_lock;
 
+// Get the Weight from the nice value (index of the array)
+// The formula is: 1024/((1.25)^(nice - 20))
+// The weight when proc fave a nice value of 20 is: niceToWeight[20] = 1024;
+int niceToWeight[] = {88818, 71054, 56843, 45475, 36380, 29104, 23283, 18626, 14901, 11921, 9537, 7629, 6104, 4883, 3906, 3125, 2500, 2000, 1600, 1280, 1024, 819, 655, 524, 419, 336, 268, 215, 172, 137, 110, 88, 70, 56, 45, 36, 29, 23, 18, 15};
+
+
 extern void forkret(void);
 static void freeproc(struct proc *p);
 
@@ -127,7 +133,7 @@ found:
 
   p->nice = 20; // set default nice value;
   p->runtime = 0;
-  p->pruntime = 0;
+  p->runtime = 0;
   p->vdeadline = 0;
   p->timeslice = 5;
   p->is_eligible = 1;
