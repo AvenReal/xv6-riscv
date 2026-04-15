@@ -442,8 +442,7 @@ kwait(uint64 addr)
 //  - eventually that process transfers control
 //    via swtch back to the scheduler.
 void
-scheduler(void)
-{
+scheduler(void) {
   struct proc *p;
   struct cpu *c = mycpu();
 
@@ -458,9 +457,10 @@ scheduler(void)
     intr_off();
 
     int found = 0;
+    struct proc *earliest = proc;
     for(p = proc; p < &proc[NPROC]; p++) {
       acquire(&p->lock);
-      if(p->state == RUNNABLE) {
+      /*if(p->state == RUNNABLE) {
         // Switch to chosen process.  It is the process's job
         // to release its lock and then reacquire it
         // before jumping back to us.
@@ -471,15 +471,34 @@ scheduler(void)
         // Process is done running for now.
         // It should have changed its p->state before coming back.
         c->proc = 0;
+found = 1;
+      }
+      */
+      if (update_is_eligible(p)) {
         update_vdeadline(p);
-        found = 1;
+        if (earliest->vdeadline > p->vdeadline) {
+          earliest = p;
+        }
       }
       release(&p->lock);
+      found = 1;
     }
-    if(found == 0) {
+    if (found == 0) {
       // nothing to run; stop running on this core until an interrupt.
       asm volatile("wfi");
     }
+
+    // Running the process
+    acquire(&earliest->lock);
+    earliest->state = RUNNING;
+    c->proc = earliest;
+    swtch(&c->context, &earliest->context);
+    c->proc = 0;
+    release(&earliest->lock);
+
+    // Updating vdeadline and eligibility
+    update_is_eligible(earliest);
+    update_vdeadline(earliest);
   }
 }
 
@@ -816,11 +835,13 @@ struct proc* get_proc_from_index(int index) {
 }
 
 void update_vdeadline(struct proc *p) {
-	const int base_time_slice = 5;
+  acquire(&p->lock);
+  const int base_time_slice = 5;
   p->vdeadline = p->vruntime + base_time_slice * WEIGHT_OF_NICE_20 / weight[p->nice];
+  release(&p->lock);
 }
 
-void update_is_eligible(struct proc *p) {
+bool update_is_eligible(struct proc *p) {
   int sum_vi = 0;
   int sum_wi = 0;
   int v_0 = p->vruntime;
@@ -839,4 +860,5 @@ void update_is_eligible(struct proc *p) {
   }
 
   p->is_eligible = sum_vi >= (p->vruntime - v_0) * sum_wi;
+  return p->is_eligible;
 }

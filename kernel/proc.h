@@ -131,4 +131,4 @@ struct proc* get_proc_from_pid(int pid);
 struct proc* get_proc_from_index(int index);
 
 void update_vdeadline(struct proc *p);
-void update_is_eligible(struct proc *p);
+bool update_is_eligible(struct proc *p);
