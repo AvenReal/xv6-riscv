@@ -835,10 +835,10 @@ struct proc* get_proc_from_index(int index) {
 }
 
 void update_vdeadline(struct proc *p) {
-  acquire(&p->lock);
+  // acquire(&p->lock);
   const int base_time_slice = 5;
   p->vdeadline = p->vruntime + base_time_slice * WEIGHT_OF_NICE_20 / weight[p->nice];
-  release(&p->lock);
+  // release(&p->lock);
 }
 
 bool update_is_eligible(struct proc *p) {
