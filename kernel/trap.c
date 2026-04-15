@@ -178,7 +178,7 @@ clockintr()
   if(p && p->state == RUNNING)
   {
     p->runtime ++;
-	p->vruntime = WEIGHT_OF_NICE_20 / weight[p->nice]; // * delta runtime (= 1)
+    p->vruntime = WEIGHT_OF_NICE_20 / weight[p->nice]; // * delta runtime (= 1)
   }
 
   // ask for the next timer interrupt. this also clears

@@ -127,7 +127,8 @@ int waitpid(int pid);
 // Custom function helping getting the struct proc from a PID
 struct proc* get_proc_from_pid(int pid);
 
-// Custom function that get a process from it's index in the proc[] array
+// Custom function that get a process from its index in the proc[] array
 struct proc* get_proc_from_index(int index);
 
 void update_vdeadline(struct proc *p);
+void update_is_eligible(struct proc *p);
