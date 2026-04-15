@@ -472,17 +472,17 @@ scheduler(void) {
         // Process is done running for now.
         // It should have changed its p->state before coming back.
         c->proc = 0;
-found = 1;
+        found = 1;
       }
       */
-      if (update_is_eligible(p)) {
+      if (p->state == RUNNABLE && update_is_eligible(p)) {
         update_vdeadline(p);
         if (earliest->vdeadline > p->vdeadline) {
           earliest = p;
+          found = 1;
         }
       }
       release(&p->lock);
-      found = 1;
     }
     if (found == 0) {
       // nothing to run; stop running on this core until an interrupt.
@@ -836,6 +836,10 @@ struct proc* get_proc_from_index(int index) {
 }
 
 void update_vdeadline(struct proc *p) {
+  if (p->state != RUNNABLE && p->state != RUNNING) {
+    p->is_eligible = 0;
+    return;
+  }
   // acquire(&p->lock);
   const int base_time_slice = 5;
   p->vdeadline = p->vruntime + base_time_slice * WEIGHT_OF_NICE_20 / weight[p->nice];
@@ -843,9 +847,9 @@ void update_vdeadline(struct proc *p) {
 }
 
 bool update_is_eligible(struct proc *p) {
-  int sum_vi = 0;
-  int sum_wi = 0;
-  int v_0 = p->vruntime;
+  long sum_vi = 0;
+  long sum_wi = 0;
+  long v_0 = p->vruntime;
 
   for (struct proc *q = proc; q < &proc[NPROC]; q++) {
     if ((q->state == RUNNABLE || q->state == RUNNING) && q->vruntime < v_0) {
