@@ -291,6 +291,10 @@ kfork(void)
     return -1;
   }
   np->sz = p->sz;
+  np->vruntime = p->vruntime;
+  np->nice = p->nice;
+  update_vdeadline(np);
+  update_is_eligible(np);
 
   // copy saved user registers.
   *(np->trapframe) = *(p->trapframe);
@@ -597,6 +601,9 @@ wakeup(void *chan)
       acquire(&p->lock);
       if(p->state == SLEEPING && p->chan == chan) {
         p->state = RUNNABLE;
+        p->timeslice = 5;
+        update_vdeadline(p);
+        update_is_eligible(p);
       }
       release(&p->lock);
     }
@@ -742,20 +749,18 @@ void ps(int pid) {
 
 
   if (pid == 0) {
-    printf("Name\tPid\tState\t\tPriority\tWeight\n");
-    for(int i = 0; i < NPROC; i++){
-      struct proc *proc = get_proc_from_index(i);
-      if(proc != 0 && proc->pid != 0) {
-        printf("%s\t%d\t%s\t%d\t%d\n", proc->name, proc->pid, procstate_string[proc->state], proc->nice,
-               weight[proc->nice]);
+    printf("Name\tPid\tState\t\tPriority\tWeight/Runtime\tRuntime\tVRuntime\tVDeadline\tEgibility\tTotal Tick\n");
+    for(struct proc* p = proc; p < &proc[NPROC]; p++){
+      if(p != 0 && p->pid != 0) {
+        printf("%s\t%d\t%s\t%d\t\t%lu\t\t%lu\t%lu\t\t%lu\t\t%d\t\t%d\n", p->name, p->pid, procstate_string[p->state], p->nice, p->runtime/weight[p->nice], p->runtime, p->vruntime, p->vdeadline, p->is_eligible, p->timeslice );
       }
     }
   }
   else{
-    struct proc *proc = get_proc_from_pid(pid);
-    if(proc != 0 && proc->pid != 0){
-      printf("name\tpid\tstate\t\tpriority\n");
-      printf("%s\t%d\t%s\t%d\n", proc->name, proc->pid, procstate_string[proc->state], proc->nice);
+    struct proc *p = get_proc_from_pid(pid);
+    if(p != 0 && p->pid != 0){
+      printf("Name\tPid\tState\t\tPriority\tWeight/Runtime\tRuntime\tVRuntime\tVDeadline\tEgibility\tTotal Tick\n");
+      printf("%s\t%d\t%s\t%d\t\t%lu\t\t%lu\t%lu\t\t%lu\t\t%d\t\t%d\n", p->name, p->pid, procstate_string[p->state], p->nice, p->runtime/weight[p->nice], p->runtime, p->vruntime, p->vdeadline, p->is_eligible, p->timeslice );
     }
   }
 }
