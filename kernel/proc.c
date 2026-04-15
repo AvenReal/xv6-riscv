@@ -762,7 +762,8 @@ void ps(int pid) {
     if (p != 0 && p->pid != 0) {
       printf("Name\tPid\tState\t\tPriority\tWeight/Runtime\tRuntime\tVRuntime\tVDeadline\tEgibility\tTotal Tick\n");
       printf("%s\t%d\t%s\t%d\t\t%lu\t\t%lu\t%lu\t\t%lu\t\t%d\t\t%d\n", p->name, p->pid, procstate_string[p->state],
-             p->nice, p->runtime / weight[p->nice], p->runtime, p->vruntime, p->vdeadline, p->is_eligible, p->timeslice * 1000 );
+             p->nice, p->runtime / weight[p->nice], p->runtime, p->vruntime, p->vdeadline, p->is_eligible,
+             p->timeslice * 1000);
     }
   }
 }
