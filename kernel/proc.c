@@ -471,7 +471,7 @@ scheduler(void)
         // Process is done running for now.
         // It should have changed its p->state before coming back.
         c->proc = 0;
-		update_vdeadline(proc);
+        update_vdeadline(p);
         found = 1;
       }
       release(&p->lock);
