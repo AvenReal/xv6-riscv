@@ -293,6 +293,7 @@ kfork(void)
   np->sz = p->sz;
   np->vruntime = p->vruntime;
   np->nice = p->nice;
+  np->timeslice = 5;
   update_vdeadline(np);
   update_is_eligible(np);
 
@@ -768,7 +769,7 @@ void ps(int pid) {
 
 
   if (pid == 0) {
-    printf("Name\tPid\tState\t\tPriority\tWeight/Runtime\tRuntime\tVRuntime\tVDeadline\tEgibility\tTotal Tick\n");
+    printf("Name\tPid\tState\t\tPriority\tRuntime/Weight\tRuntime\tVRuntime\tVDeadline\tEgibility\tTotal Tick\n");
     for (struct proc *p = proc; p < &proc[NPROC]; p++) {
       if (p != 0 && p->pid != 0) {
         printf("%s\t%d\t%s\t%d\t\t%lu\t\t%lu\t%lu\t\t%lu\t\t%d\t\t%d\n", p->name, p->pid, procstate_string[p->state],
