@@ -15,7 +15,8 @@ extern char trampoline[], uservec[];
 void kernelvec();
 
 extern int devintr();
-extern int niceToWeight[40];
+extern int weight[40];
+extern const int WEIGHT_OF_NICE_20;
 
 void
 trapinit(void)
@@ -177,7 +178,7 @@ clockintr()
   if(p && p->state == RUNNING)
   {
     p->runtime ++;
-	p->vruntime = 1024 / niceToWeight[p->nice]; // * delta runtime (= 1)
+	p->vruntime = WEIGHT_OF_NICE_20 / weight[p->nice]; // * delta runtime (= 1)
   }
 
   // ask for the next timer interrupt. this also clears

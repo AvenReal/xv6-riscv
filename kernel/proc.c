@@ -17,9 +17,9 @@ struct spinlock pid_lock;
 
 // Get the Weight from the nice value (index of the array)
 // The formula is: 1024/((1.25)^(nice - 20))
-// The weight when proc fave a nice value of 20 is: niceToWeight[20] = 1024;
-int niceToWeight[] = {88818, 71054, 56843, 45475, 36380, 29104, 23283, 18626, 14901, 11921, 9537, 7629, 6104, 4883, 3906, 3125, 2500, 2000, 1600, 1280, 1024, 819, 655, 524, 419, 336, 268, 215, 172, 137, 110, 88, 70, 56, 45, 36, 29, 23, 18, 15};
-
+// The weight when proc fave a nice value of 20 is: weight[20] = 1024;
+int weight[] = {88818, 71054, 56843, 45475, 36380, 29104, 23283, 18626, 14901, 11921, 9537, 7629, 6104, 4883, 3906, 3125, 2500, 2000, 1600, 1280, 1024, 819, 655, 524, 419, 336, 268, 215, 172, 137, 110, 88, 70, 56, 45, 36, 29, 23, 18, 15};
+const int WEIGHT_OF_NICE_20 = 1024;
 
 extern void forkret(void);
 static void freeproc(struct proc *p);
@@ -743,7 +743,7 @@ void ps(int pid) {
     for(int i = 0; i < NPROC; i++){
       struct proc *proc = get_proc_from_index(i);
       if(proc != 0 && proc->pid != 0) {
-        printf("%s\t%d\t%s\t%d\t%d\n", proc->name, proc->pid, procstate_string[proc->state], proc->nice, niceToWeight[proc->nice]);
+        printf("%s\t%d\t%s\t%d\t%d\n", proc->name, proc->pid, procstate_string[proc->state], proc->nice, weight[proc->nice]);
       }
     }
   }
@@ -805,5 +805,24 @@ struct proc* get_proc_from_index(int index) {
 
 void update_vdeadline(struct proc *p) {
 	const int base_time_slice = 5;
-	p->vdeadline = p->vruntime + base_time_slice * 1024 / niceToWeight[p->nice];
+	p->vdeadline = p->vruntime + base_time_slice * WEIGHT_OF_NICE_20 / weight[p->nice];
+}
+
+uint64 calculate_lag_value(struct  proc* p) {
+  uint64 sum_vi = 0, sum_wi = 0, v_0 = p->vruntime;
+
+  for(struct proc* q = proc; q < &proc[NPROC]; q++) {
+    if ((q->state == RUNNABLE || q->state == RUNNING) && q->vruntime < v_0) {
+      v_0 = q->vruntime;
+    }
+  }
+
+  for(struct proc* q = proc; q < &proc[NPROC]; q++) {
+    if (q->state == RUNNABLE || q->state == RUNNING) {
+      sum_vi += (q->vruntime - v_0) * weight[q->nice];
+      sum_wi += weight[q->nice];
+    }
+  }
+
+  return weight[p->nice] * (sum_vi/sum_wi + v_0 - p->vruntime);
 }
