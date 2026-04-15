@@ -464,6 +464,7 @@ scheduler(void)
         // Process is done running for now.
         // It should have changed its p->state before coming back.
         c->proc = 0;
+		update_vdeadline(proc);
         found = 1;
       }
       release(&p->lock);
@@ -727,6 +728,7 @@ int setnice(int pid, int value) {
 
   acquire(&proc->lock);
   proc->nice = value;
+  update_vdeadline(proc);
   release(&proc->lock);
 
   return 0;
@@ -737,11 +739,11 @@ void ps(int pid) {
 
 
   if (pid == 0) {
-    printf("name\tpid\tstate\t\tpriority\n");
+    printf("Name\tPid\tState\t\tPriority\tWeight\n");
     for(int i = 0; i < NPROC; i++){
       struct proc *proc = get_proc_from_index(i);
       if(proc != 0 && proc->pid != 0) {
-        printf("%s\t%d\t%s\t%d\n", proc->name, proc->pid, procstate_string[proc->state], proc->nice);
+        printf("%s\t%d\t%s\t%d\t%d\n", proc->name, proc->pid, procstate_string[proc->state], proc->nice, niceToWeight[proc->nice]);
       }
     }
   }
@@ -775,8 +777,7 @@ int waitpid(int pid) {
 }
 
 // Custom function helping getting the struct proc from a PID
-struct proc*
-get_proc_from_pid(int pid)
+struct proc* get_proc_from_pid(int pid)
 {
   struct proc *p;
 
@@ -789,8 +790,7 @@ get_proc_from_pid(int pid)
 }
 
 // Custom function that get a process from it's index in the proc[] array
-struct proc*
-get_proc_from_index(int index) {
+struct proc* get_proc_from_index(int index) {
   if (index < 0 || index >= NPROC) {
     return 0;
   }
@@ -801,4 +801,9 @@ get_proc_from_index(int index) {
   }
 
   return p;
+}
+
+void update_vdeadline(struct proc *p) {
+	const int base_time_slice = 5;
+	p->vdeadline = p->vruntime + base_time_slice * 1024 / niceToWeight[p->nice];
 }

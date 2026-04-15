@@ -129,3 +129,5 @@ struct proc* get_proc_from_pid(int pid);
 
 // Custom function that get a process from it's index in the proc[] array
 struct proc* get_proc_from_index(int index);
+
+void update_vdeadline(struct proc *p);
