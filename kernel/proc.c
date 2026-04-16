@@ -844,7 +844,7 @@ void update_vdeadline(struct proc *p) {
   p->vdeadline = p->vruntime + base_time_slice * WEIGHT_OF_NICE_20 / weight[p->nice];
 }
 
-bool update_is_eligible(struct proc *p) {
+int update_is_eligible(struct proc *p) {
   long sum_vi = 0;
   long sum_wi = 0;
   long v_0 = p->vruntime;
