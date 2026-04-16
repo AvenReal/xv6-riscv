@@ -769,7 +769,7 @@ void ps(int pid) {
 
 
   if (pid == 0) {
-    printf("Name\tPid\tState\t\tPriority\tRuntime/Weight\tRuntime\tVRuntime\tVDeadline\tEgibility\tTotal Tick\n");
+    printf("Name\tPid\tState\t\tPriority\tRuntime/Weight\tRuntime\tVRuntime\tVDeadline\tEligibility\tTotal Tick\n");
     for (struct proc *p = proc; p < &proc[NPROC]; p++) {
       if (p != 0 && p->pid != 0) {
         printf("%s\t%d\t%s\t%d\t\t%lu\t\t%lu\t%lu\t\t%lu\t\t%d\t\t%d\n", p->name, p->pid, procstate_string[p->state],
@@ -780,7 +780,7 @@ void ps(int pid) {
   } else {
     struct proc *p = get_proc_from_pid(pid);
     if (p != 0 && p->pid != 0) {
-      printf("Name\tPid\tState\t\tPriority\tWeight/Runtime\tRuntime\tVRuntime\tVDeadline\tEgibility\tTotal Tick\n");
+      printf("Name\tPid\tState\t\tPriority\tWeight/Runtime\tRuntime\tVRuntime\tVDeadline\tEligibility\tTotal Tick\n");
       printf("%s\t%d\t%s\t%d\t\t%lu\t\t%lu\t%lu\t\t%lu\t\t%d\t\t%d\n", p->name, p->pid, procstate_string[p->state],
              p->nice, p->runtime / weight[p->nice], p->runtime, p->vruntime, p->vdeadline, p->is_eligible,
              p->timeslice * 1000);
@@ -840,10 +840,8 @@ void update_vdeadline(struct proc *p) {
     p->is_eligible = 0;
     return;
   }
-  // acquire(&p->lock);
   const int base_time_slice = 5;
   p->vdeadline = p->vruntime + base_time_slice * WEIGHT_OF_NICE_20 / weight[p->nice];
-  // release(&p->lock);
 }
 
 bool update_is_eligible(struct proc *p) {
