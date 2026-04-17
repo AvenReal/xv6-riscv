@@ -175,7 +175,7 @@ clockintr()
 
   // Handle EEVDF logic
   struct proc *p = myproc();
-  if (p->timeslice <= 0)
+  if (p && p->timeslice <= 0)
   {
 	  p->timeslice = 5;
 	  yield();

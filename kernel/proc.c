@@ -458,7 +458,7 @@ scheduler(void) {
     intr_off();
 
     int found = 0;
-    struct proc *earliest = proc;
+    struct proc *earliest = 0;
     for(p = proc; p < &proc[NPROC]; p++) {
       acquire(&p->lock);
       /*if(p->state == RUNNABLE) {
@@ -476,23 +476,29 @@ scheduler(void) {
       }
       */
       if (p->state == RUNNABLE && update_is_eligible(p)) {
+	//printf("Passé is_elligible");
         update_vdeadline(p);
-        if (earliest->vdeadline > p->vdeadline) {
+	//printf("Passé les updates()");
+        if (earliest == 0 || earliest->vdeadline > p->vdeadline) {
+	  //printf("found pid=%d\n", p->pid);
           earliest = p;
           found = 1;
         }
       }
+      //printf("p->state is runnable ? %d\n, p-> state is running ? %d\n", p->state == RUNNABLE, p->state == RUNNING);
       release(&p->lock);
     }
-    if (found == 0) {
+    if (found == 0 || earliest == 0) {
       // nothing to run; stop running on this core until an interrupt.
       asm volatile("wfi");
+      continue;
     }
 
     // Running the process
     acquire(&earliest->lock);
     earliest->state = RUNNING;
     c->proc = earliest;
+    //printf("run pid=%d\n", earliest->pid);
     swtch(&c->context, &earliest->context);
     c->proc = 0;
     release(&earliest->lock);
