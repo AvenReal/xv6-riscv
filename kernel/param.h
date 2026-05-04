@@ -13,3 +13,12 @@
 #define MAXPATH      128   // maximum file path name
 #define USERSTACK    1     // user stack pages
 
+#define PROT_READ 0x1       // protection flags
+#define PROT_WRITE 0x2
+
+#define MMAPBASE 0x40000000L //mmap base
+
+#define MAP_ANONYMOUS 0x1   // mapping flags
+#define MAP_POPULATE 0x2
+
+#define MAXMMAP 64          // max nb of mapping
