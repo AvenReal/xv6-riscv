@@ -31,7 +31,13 @@ int setnice(int pid, int value);
 int ps(int pid);
 int meminfo(void);
 int waitpid(int pid);
+int meminfo(void);
 
+int waitpid(int pid);
+
+uint64 mmap(uint64 addr, int length, int prot, int flags, int fd, int offset);
+
+int munmap(uint64 addr);
 
 // ulib.c
 int stat(const char*, struct stat*);
