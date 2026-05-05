@@ -144,3 +144,27 @@ uint64 sys_waitpid(void) {
   return waitpid(pid);
 }
 
+
+uint64 sys_mmap(void) {
+  int length, prot, flags, fd, offset;
+  uint64 addr;
+  argaddr(0, &addr);
+  argint(1, &length);
+  argint(2, &prot);
+  argint(3, &flags);
+  argint(4, &offset);
+  argint(5, &fd);
+
+  return mmap(addr, length, prot, flags, fd, offset);
+}
+
+uint64 sys_munmap(void) {
+  uint64 addr;
+  argaddr(0, &addr);
+
+  return munmap(addr);
+}
+
+uint64 sys_freemem(void) {
+  return freemem();
+}
