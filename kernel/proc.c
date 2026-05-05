@@ -834,6 +834,7 @@ int munmap(uint64 addr) {
 }
 
 int freemem() {
+
 }
 
 // Custom function helping getting the struct proc from a PID

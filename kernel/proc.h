@@ -114,6 +114,15 @@ struct proc {
   int is_eligible;			   // Egibility flag
 };
 
+struct mmap_area {
+  struct file *f;
+  uint64 addr;
+  int length;
+  int offset;
+  int prot;
+  int flags;
+  struct proc *p;
+};
 
 // Custom syscall
 #pragma once
