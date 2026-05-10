@@ -123,7 +123,7 @@ struct mmap_area {
   int flags;
   struct proc *p;
 };
-
+struct mmap_area ma[64];
 // Custom syscall
 #pragma once
 int getnice(int pid);
