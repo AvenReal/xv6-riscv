@@ -804,6 +804,7 @@ int waitpid(int pid) {
   return 0;
 }
 
+/*
 static int
 mmap_has_overlap(struct proc *p, uint64 start, uint64 end) {
   int i;
@@ -876,16 +877,79 @@ fail:
   return -1;
 }
 
+static struct mmap_area *
+mmap_find_slot(struct proc *p, uint64 start, uint64 end)
+{
+  for(int i = 0; i < MAXMMAP; i++){
+    if(ma[i].p == p && ma[i].length > 0){
+      uint64 a = ma[i].addr;
+      uint64 b = a + (uint64)ma[i].length;
+      if(start < b && end > a)
+        return 0;   // overlap
+    }
+  }
+  return 0;
+}
+*/
+
+static struct mmap_area *
+mmap_alloc_slot(void) {
+  for (int i = 0; i < MAXMMAP; i++) {
+    if (ma[i].p == 0)
+      return &ma[i];
+  }
+  return 0;
+}
+
+static int
+mmap_map_one_page(struct proc *p, struct mmap_area *m, uint64 va, int page_no) {
+  char *mem;
+  int perm;
+
+  mem = kalloc();
+  if (mem == 0)
+    return -1;
+
+  memset(mem, 0, PGSIZE);
+
+  if ((m->flags & MAP_ANONYMOUS) == 0) {
+    int off = m->offset + page_no * PGSIZE;
+    int n = PGSIZE;
+
+    ilock(m->f->ip);
+    if (off >= m->f->ip->size) {
+      iunlock(m->f->ip);
+    } else {
+      if (off + n > m->f->ip->size)
+        n = m->f->ip->size - off;
+      if (readi(m->f->ip, 0, (uint64) mem, off, n) != n) {
+        iunlock(m->f->ip);
+        kfree(mem);
+        return -1;
+      }
+      iunlock(m->f->ip);
+    }
+  }
+
+  perm = PTE_U | PTE_R;
+  if (m->prot & PROT_WRITE)
+    perm |= PTE_W;
+
+  if (mappages(p->pagetable, va, PGSIZE, (uint64) mem, perm) != 0) {
+    kfree(mem);
+    return -1;
+  }
+
+  return 0;
+}
+
 uint64
 mmap(uint64 addr, int length, int prot, int flags, int fd, int offset) {
-  struct proc *p;
-  struct file *f;
+  struct proc *p = myproc();
+  struct file *f = 0;
   struct mmap_area *m;
   uint64 start, end;
-  int slot, i;
-  int is_anon;
-
-  p = myproc();
+  int npages;
 
   if (addr % PGSIZE)
     return 0;
@@ -896,79 +960,72 @@ mmap(uint64 addr, int length, int prot, int flags, int fd, int offset) {
   if (prot != PROT_READ && prot != (PROT_READ | PROT_WRITE))
     return 0;
 
-  is_anon = (flags & MAP_ANONYMOUS) != 0;
+  start = MMAPBASE + addr;
+  end = start + (uint64) length;
+  if (end < start)
+    return 0;
 
-  if (is_anon) {
+  if (flags & MAP_ANONYMOUS) {
     if (fd != -1)
       return 0;
-    f = 0;
   } else {
     if (fd < 0 || fd >= NOFILE)
       return 0;
     f = p->ofile[fd];
     if (f == 0)
       return 0;
-
     if ((prot & PROT_READ) && !f->readable)
       return 0;
     if ((prot & PROT_WRITE) && !f->writable)
       return 0;
   }
 
-  start = MMAPBASE + addr;
-  end = start + (uint64) length;
-  if (end < start || end > MAXVA)
-    return 0;
-
-  if (mmap_has_overlap(p, start, end))
-    return 0;
-
-  slot = -1;
-  for (i = 0; i < MAXMMAP; i++) {
-    if (ma[i].p == 0) {
-      slot = i;
-      break;
+  for (int i = 0; i < MAXMMAP; i++) {
+    if (ma[i].p == p && ma[i].length > 0) {
+      uint64 a = ma[i].addr;
+      uint64 b = a + (uint64) ma[i].length;
+      if (start < b && end > a)
+        return 0;
     }
   }
-  if (slot < 0)
+
+  m = mmap_alloc_slot();
+  if (m == 0)
     return 0;
 
-  m = &ma[slot];
   memset(m, 0, sizeof(*m));
-
-  if (!is_anon) {
-    m->f = filedup(f);
-    if (m->f == 0) {
-      memset(m, 0, sizeof(*m));
-      return 0;
-    }
-  }
-
   m->addr = start;
   m->length = length;
   m->offset = offset;
   m->prot = prot;
   m->flags = flags;
   m->p = p;
+  if (f)
+    m->f = filedup(f);
+
+  npages = length / PGSIZE;
 
   if (flags & MAP_POPULATE) {
-    if (mmap_populate(p, m) < 0) {
-      if (m->f)
-        fileclose(m->f);
-      memset(m, 0, sizeof(*m));
-      return 0;
+    for (int i = 0; i < npages; i++) {
+      if (mmap_map_one_page(p, m, start + (uint64) i * PGSIZE, i) < 0) {
+        for (int j = 0; j < i; j++)
+          uvmunmap(p->pagetable, start + (uint64) j * PGSIZE, 1, 1);
+        if (m->f)
+          fileclose(m->f);
+        memset(m, 0, sizeof(*m));
+        return 0;
+      }
     }
   }
 
   return start;
 }
 
-int munmap(uint64 addr) {
+int
+munmap(uint64 addr) {
   struct proc *p = myproc();
   struct mmap_area *m = 0;
   int i;
-  int npages;
-  uint64 va;
 
   if (addr % PGSIZE)
     return -1;
@@ -983,18 +1040,13 @@ int munmap(uint64 addr) {
   if (m == 0)
     return -1;
 
-  npages = m->length / PGSIZE;
-
-  for (i = 0; i < npages; i++) {
-    pte_t *pte;
-    uint64 pa;
-
-    va = m->addr + (uint64) i * PGSIZE;
-    pte = walk(p->pagetable, va, 0);
+  for (i = 0; i < m->length / PGSIZE; i++) {
+    uint64 va = m->addr + (uint64) i * PGSIZE;
+    pte_t *pte = walk(p->pagetable, va, 0);
     if (pte == 0 || (*pte & PTE_V) == 0)
       continue;
 
-    pa = PTE2PA(*pte);
+    uint64 pa = PTE2PA(*pte);
     kfree((void *) pa);
     *pte = 0;
   }
