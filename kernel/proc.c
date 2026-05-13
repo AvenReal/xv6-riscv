@@ -964,12 +964,50 @@ mmap(uint64 addr, int length, int prot, int flags, int fd, int offset) {
 }
 
 int munmap(uint64 addr) {
-  return 0;
+  struct proc *p = myproc();
+  struct mmap_area *m = 0;
+  int i;
+  int npages;
+  uint64 va;
+
+  if (addr % PGSIZE)
+    return -1;
+
+  for (i = 0; i < MAXMMAP; i++) {
+    if (ma[i].p == p && ma[i].length > 0 && ma[i].addr == addr) {
+      m = &ma[i];
+      break;
+    }
+  }
+
+  if (m == 0)
+    return -1;
+
+  npages = m->length / PGSIZE;
+
+  for (i = 0; i < npages; i++) {
+    pte_t *pte;
+    uint64 pa;
+
+    va = m->addr + (uint64) i * PGSIZE;
+    pte = walk(p->pagetable, va, 0);
+    if (pte == 0 || (*pte & PTE_V) == 0)
+      continue;
+
+    pa = PTE2PA(*pte);
+    kfree((void *) pa);
+    *pte = 0;
+  }
+
+  if (m->f)
+    fileclose(m->f);
+
+  memset(m, 0, sizeof(*m));
+  sfence_vma();
+
+  return 1;
 }
 
-int freemem() {
-  return 0;
-}
 
 // Custom function helping getting the struct proc from a PID
 struct proc *get_proc_from_pid(int pid) {
