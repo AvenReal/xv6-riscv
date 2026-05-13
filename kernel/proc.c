@@ -804,80 +804,8 @@ int waitpid(int pid) {
   return 0;
 }
 
-/*
-static int
-mmap_has_overlap(struct proc *p, uint64 start, uint64 end) {
-  int i;
 
-  for (i = 0; i < MAXMMAP; i++) {
-    if (ma[i].p != p)
-      continue;
-    if (ma[i].length <= 0)
-      continue;
-
-    if (start < ma[i].addr + (uint64) ma[i].length &&
-        end > ma[i].addr)
-      return 1;
-  }
-  return 0;
-}
-
-static int
-mmap_populate(struct proc *p, struct mmap_area *m) {
-  int i, npages, perm;
-
-  npages = m->length / PGSIZE;
-
-  perm = PTE_U | PTE_R;
-  if (m->prot & PROT_WRITE)
-    perm |= PTE_W;
-
-  for (i = 0; i < npages; i++) {
-    char *mem;
-    uint64 va;
-    int off;
-    int n;
-
-    mem = kalloc();
-    if (mem == 0)
-      goto fail;
-
-    memset(mem, 0, PGSIZE);
-
-    if ((m->flags & MAP_ANONYMOUS) == 0) {
-      off = m->offset + i * PGSIZE;
-
-      ilock(m->f->ip);
-      if (off < m->f->ip->size) {
-        n = m->f->ip->size - off;
-        if (n > PGSIZE)
-          n = PGSIZE;
-
-        if (readi(m->f->ip, 0, (uint64) mem, off, n) != n) {
-          iunlock(m->f->ip);
-          kfree(mem);
-          goto fail;
-        }
-      }
-      iunlock(m->f->ip);
-    }
-
-    va = m->addr + (uint64) i * PGSIZE;
-    if (mappages(p->pagetable, va, PGSIZE, (uint64) mem, perm) != 0) {
-      kfree(mem);
-      goto fail;
-    }
-  }
-
-  return 0;
-
-fail:
-  if (i > 0)
-    uvmunmap(p->pagetable, m->addr, i, 1);
-  return -1;
-}
-
-static struct mmap_area *
+/*static struct mmap_area *
 mmap_find_slot(struct proc *p, uint64 start, uint64 end)
 {
   for(int i = 0; i < MAXMMAP; i++){
@@ -889,8 +817,7 @@ mmap_find_slot(struct proc *p, uint64 start, uint64 end)
     }
   }
   return 0;
-}
-*/
+}*/
 
 static struct mmap_area *
 mmap_alloc_slot(void) {
