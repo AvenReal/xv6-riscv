@@ -61,3 +61,9 @@ void printf(const char*, ...) __attribute__ ((format (printf, 1, 2)));
 // umalloc.c
 void* malloc(uint);
 void free(void*);
+
+uint64 mmap(uint64 addr, int length, int prot, int flags, int fd, int offset);
+
+int munmap(uint64 addr);
+
+int freemem(void);
