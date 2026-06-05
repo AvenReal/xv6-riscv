@@ -60,3 +60,7 @@
 //   TRAPFRAME (p->trapframe, used by the trampoline)
 //   TRAMPOLINE (the same page as in the kernel)
 #define TRAPFRAME (TRAMPOLINE - PGSIZE)
+
+#define SWAPBASE 2000
+#define SWAPMAX  28000
+#define PHYSTOP  (KERNBASE + 4*1024*1024 + 512*1024)  // 4.5 MiB; tune as needed
