@@ -33,10 +33,10 @@ void
 proc_mapstacks(pagetable_t kpgtbl)
 {
   struct proc *p;
-
-  for (p = proc; p < &proc[NPROC]; p++) {
+  
+  for(p = proc; p < &proc[NPROC]; p++) {
     char *pa = kalloc();
-    if (pa == 0)
+    if(pa == 0)
       panic("kalloc");
     uint64 va = KSTACK((int)(p - proc));
     kvmmap(kpgtbl, va, (uint64)pa, PGSIZE, PTE_R | PTE_W);
@@ -45,8 +45,7 @@ proc_mapstacks(pagetable_t kpgtbl)
 
 // initialize the proc table.
 void
-procinit(void)
-{
+procinit(void) {
   struct proc *p;
 
   initlock(&pid_lock, "nextpid");
@@ -62,8 +61,7 @@ procinit(void)
 // to prevent race with process being moved
 // to a different CPU.
 int
-cpuid()
-{
+cpuid() {
   int id = r_tp();
   return id;
 }
@@ -80,8 +78,7 @@ mycpu(void)
 
 // Return the current struct proc *, or zero if none.
 struct proc *
-myproc(void)
-{
+myproc(void) {
   push_off();
   struct cpu *c = mycpu();
   struct proc *p = c->proc;
@@ -90,8 +87,7 @@ myproc(void)
 }
 
 int
-allocpid()
-{
+allocpid() {
   int pid;
 
   acquire(&pid_lock);
@@ -107,8 +103,7 @@ allocpid()
 // and return with p->lock held.
 // If there are no free procs, or a memory allocation fails, return 0.
 static struct proc *
-allocproc(void)
-{
+allocproc(void) {
   struct proc *p;
 
   for (p = proc; p < &proc[NPROC]; p++) {
@@ -143,7 +138,7 @@ found:
   // Set up new context to start executing at forkret,
   // which returns to user space.
   memset(&p->context, 0, sizeof(p->context));
-  p->context.ra = (uint64)forkret;
+  p->context.ra = (uint64) forkret;
   p->context.sp = p->kstack + PGSIZE;
 
   return p;
@@ -153,10 +148,9 @@ found:
 // including user pages.
 // p->lock must be held.
 static void
-freeproc(struct proc *p)
-{
+freeproc(struct proc *p) {
   if (p->trapframe)
-    kfree((void *)p->trapframe);
+    kfree((void *) p->trapframe);
   p->trapframe = 0;
   if (p->pagetable)
     proc_freepagetable(p->pagetable, p->sz);
@@ -174,8 +168,7 @@ freeproc(struct proc *p)
 // Create a user page table for a given process, with no user memory,
 // but with trampoline and trapframe pages.
 pagetable_t
-proc_pagetable(struct proc *p)
-{
+proc_pagetable(struct proc *p) {
   pagetable_t pagetable;
 
   // An empty page table.
@@ -187,16 +180,16 @@ proc_pagetable(struct proc *p)
   // at the highest user virtual address.
   // only the supervisor uses it, on the way
   // to/from user space, so not PTE_U.
-  if (mappages(pagetable, TRAMPOLINE, PGSIZE, (uint64)trampoline,
-               PTE_R | PTE_X) < 0) {
+  if (mappages(pagetable, TRAMPOLINE, PGSIZE,
+               (uint64) trampoline, PTE_R | PTE_X) < 0) {
     uvmfree(pagetable, 0);
     return 0;
   }
 
   // map the trapframe page just below the trampoline page, for
   // trampoline.S.
-  if (mappages(pagetable, TRAPFRAME, PGSIZE, (uint64)(p->trapframe),
-               PTE_R | PTE_W) < 0) {
+  if (mappages(pagetable, TRAPFRAME, PGSIZE,
+               (uint64) (p->trapframe), PTE_R | PTE_W) < 0) {
     uvmunmap(pagetable, TRAMPOLINE, 1, 0);
     uvmfree(pagetable, 0);
     return 0;
@@ -208,8 +201,7 @@ proc_pagetable(struct proc *p)
 // Free a process's page table, and free the
 // physical memory it refers to.
 void
-proc_freepagetable(pagetable_t pagetable, uint64 sz)
-{
+proc_freepagetable(pagetable_t pagetable, uint64 sz) {
   uvmunmap(pagetable, TRAMPOLINE, 1, 0);
   uvmunmap(pagetable, TRAPFRAME, 1, 0);
   uvmfree(pagetable, sz);
@@ -217,8 +209,7 @@ proc_freepagetable(pagetable_t pagetable, uint64 sz)
 
 // Set up first user process.
 void
-userinit(void)
-{
+userinit(void) {
   struct proc *p;
 
   p = allocproc();
@@ -234,8 +225,7 @@ userinit(void)
 // Grow or shrink user memory by n bytes.
 // Return 0 on success, -1 on failure.
 int
-growproc(int n)
-{
+growproc(int n) {
   uint64 sz;
   struct proc *p = myproc();
 
@@ -257,8 +247,7 @@ growproc(int n)
 // Create a new process, copying the parent.
 // Sets up child kernel stack to return as if from fork() system call.
 int
-kfork(void)
-{
+kfork(void) {
   int i, pid;
   struct proc *np;
   struct proc *p = myproc();
@@ -308,8 +297,7 @@ kfork(void)
 // Pass p's abandoned children to init.
 // Caller must hold wait_lock.
 void
-reparent(struct proc *p)
-{
+reparent(struct proc *p) {
   struct proc *pp;
 
   for (pp = proc; pp < &proc[NPROC]; pp++) {
@@ -324,8 +312,7 @@ reparent(struct proc *p)
 // An exited process remains in the zombie state
 // until its parent calls wait().
 void
-kexit(int status)
-{
+kexit(int status) {
   struct proc *p = myproc();
 
   if (p == initproc)
@@ -368,8 +355,7 @@ kexit(int status)
 // Wait for a child process to exit and return its pid.
 // Return -1 if this process has no children.
 int
-kwait(uint64 addr)
-{
+kwait(uint64 addr) {
   struct proc *pp;
   int havekids, pid;
   struct proc *p = myproc();
@@ -388,7 +374,7 @@ kwait(uint64 addr)
         if (pp->state == ZOMBIE) {
           // Found one.
           pid = pp->pid;
-          if (addr != 0 && copyout(p->pagetable, addr, (char *)&pp->xstate,
+          if (addr != 0 && copyout(p->pagetable, addr, (char *) &pp->xstate,
                                    sizeof(pp->xstate)) < 0) {
             release(&pp->lock);
             release(&wait_lock);
@@ -422,8 +408,7 @@ kwait(uint64 addr)
 //  - eventually that process transfers control
 //    via swtch back to the scheduler.
 void
-scheduler(void)
-{
+scheduler(void) {
   struct proc *p;
   struct cpu *c = mycpu();
 
@@ -470,8 +455,7 @@ scheduler(void)
 // break in the few places where a lock is held but
 // there's no process.
 void
-sched(void)
-{
+sched(void) {
   int intena;
   struct proc *p = myproc();
 
@@ -491,8 +475,7 @@ sched(void)
 
 // Give up the CPU for one scheduling round.
 void
-yield(void)
-{
+yield(void) {
   struct proc *p = myproc();
   acquire(&p->lock);
   p->state = RUNNABLE;
@@ -503,8 +486,7 @@ yield(void)
 // A fork child's very first scheduling by scheduler()
 // will swtch to forkret.
 void
-forkret(void)
-{
+forkret(void) {
   extern char userret[];
   static int first = 1;
   struct proc *p = myproc();
@@ -534,14 +516,13 @@ forkret(void)
   prepare_return();
   uint64 satp = MAKE_SATP(p->pagetable);
   uint64 trampoline_userret = TRAMPOLINE + (userret - trampoline);
-  ((void (*)(uint64))trampoline_userret)(satp);
+  ((void (*)(uint64)) trampoline_userret)(satp);
 }
 
 // Sleep on channel chan, releasing condition lock lk.
 // Re-acquires lk when awakened.
 void
-sleep(void *chan, struct spinlock *lk)
-{
+sleep(void *chan, struct spinlock *lk) {
   struct proc *p = myproc();
 
   // Must acquire p->lock in order to
@@ -571,8 +552,7 @@ sleep(void *chan, struct spinlock *lk)
 // Wake up all processes sleeping on channel chan.
 // Caller should hold the condition lock.
 void
-wakeup(void *chan)
-{
+wakeup(void *chan) {
   struct proc *p;
 
   for (p = proc; p < &proc[NPROC]; p++) {
@@ -590,8 +570,7 @@ wakeup(void *chan)
 // The victim won't exit until it tries to return
 // to user space (see usertrap() in trap.c).
 int
-kkill(int pid)
-{
+kkill(int pid) {
   struct proc *p;
 
   for (p = proc; p < &proc[NPROC]; p++) {
@@ -611,16 +590,14 @@ kkill(int pid)
 }
 
 void
-setkilled(struct proc *p)
-{
+setkilled(struct proc *p) {
   acquire(&p->lock);
   p->killed = 1;
   release(&p->lock);
 }
 
 int
-killed(struct proc *p)
-{
+killed(struct proc *p) {
   int k;
 
   acquire(&p->lock);
@@ -633,13 +610,12 @@ killed(struct proc *p)
 // depending on usr_dst.
 // Returns 0 on success, -1 on error.
 int
-either_copyout(int user_dst, uint64 dst, void *src, uint64 len)
-{
+either_copyout(int user_dst, uint64 dst, void *src, uint64 len) {
   struct proc *p = myproc();
   if (user_dst) {
     return copyout(p->pagetable, dst, src, len);
   } else {
-    memmove((char *)dst, src, len);
+    memmove((char *) dst, src, len);
     return 0;
   }
 }
@@ -648,13 +624,12 @@ either_copyout(int user_dst, uint64 dst, void *src, uint64 len)
 // depending on usr_src.
 // Returns 0 on success, -1 on error.
 int
-either_copyin(void *dst, int user_src, uint64 src, uint64 len)
-{
+either_copyin(void *dst, int user_src, uint64 src, uint64 len) {
   struct proc *p = myproc();
   if (user_src) {
     return copyin(p->pagetable, dst, src, len);
   } else {
-    memmove(dst, (char *)src, len);
+    memmove(dst, (char *) src, len);
     return 0;
   }
 }
@@ -663,17 +638,14 @@ either_copyin(void *dst, int user_src, uint64 src, uint64 len)
 // Runs when user types ^P on console.
 // No lock to avoid wedging a stuck machine further.
 void
-procdump(void)
-{
+procdump(void) {
   static char *states[] = {
-    // clang-format off
-    [UNUSED]    "unused",
-    [USED]      "used",
-    [SLEEPING]  "sleep ",
-    [RUNNABLE]  "runble",
-    [RUNNING]   "run   ",
-    [ZOMBIE]    "zombie"
-    // clang-format on
+  [UNUSED]    "unused",
+  [USED]      "used",
+  [SLEEPING]  "sleep ",
+  [RUNNABLE]  "runble",
+  [RUNNING]   "run   ",
+  [ZOMBIE]    "zombie"
   };
   struct proc *p;
   char *state;

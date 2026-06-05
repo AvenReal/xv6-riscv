@@ -166,7 +166,9 @@ mappages(pagetable_t pagetable, uint64 va, uint64 size, uint64 pa, int perm)
     if (*pte & PTE_V)
       panic("mappages: remap");
     *pte = PA2PTE(pa) | perm | PTE_V;
-    if (a == last)
+    if(perm & PTE_U)
+      lru_add(pagetable, a, pa);
+    if(a == last)
       break;
     a += PGSIZE;
     pa += PGSIZE;
@@ -180,8 +182,8 @@ pagetable_t
 uvmcreate()
 {
   pagetable_t pagetable;
-  pagetable = (pagetable_t)kalloc();
-  if (pagetable == 0)
+  pagetable = (pagetable_t) kalloc();
+  if(pagetable == 0)
     return 0;
   memset(pagetable, 0, PGSIZE);
   return pagetable;
@@ -199,14 +201,21 @@ uvmunmap(pagetable_t pagetable, uint64 va, uint64 npages, int do_free)
   if ((va % PGSIZE) != 0)
     panic("uvmunmap: not aligned");
 
-  for (a = va; a < va + npages * PGSIZE; a += PGSIZE) {
-    if ((pte = walk(pagetable, a, 0)) == 0) // leaf page table entry allocated?
+  for(a = va; a < va + npages*PGSIZE; a += PGSIZE){
+    if((pte = walk(pagetable, a, 0)) == 0) // leaf page table entry allocated?
+      continue;   
+    if((*pte & PTE_V) == 0){  // has physical page been allocated?
+      if(*pte & PTE_S){
+        swap_free_slot(PTE2SLOT(*pte));
+        *pte = 0;
+      }
       continue;
-    if ((*pte & PTE_V) == 0) // has physical page been allocated?
-      continue;
-    if (do_free) {
+    }
+    if(do_free){
       uint64 pa = PTE2PA(*pte);
-      kfree((void *)pa);
+      if(*pte & PTE_U)
+	lru_remove(pa);
+      kfree((void*)pa);
     }
     *pte = 0;
   }

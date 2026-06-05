@@ -42,3 +42,14 @@ entry("getpid");
 entry("sbrk");
 entry("pause");
 entry("uptime");
+
+# my system calls
+entry("getnice");
+entry("setnice");
+entry("ps");
+entry("meminfo");
+entry("waitpid");
+entry("mmap");
+entry("munmap");
+entry("freemem");
+entry("swapstat");

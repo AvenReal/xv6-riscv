@@ -1,4 +1,3 @@
-// clang-format off
 struct buf;
 struct context;
 struct file;
@@ -149,6 +148,7 @@ void            uartinit(void);
 void            uartintr(void);
 void            uartwrite(char [], int);
 void            uartputc_sync(int);
+int             uartgetc(void);
 
 // vm.c
 void            kvminit(void);
@@ -182,4 +182,21 @@ void            virtio_disk_rw(struct buf *, int);
 void            virtio_disk_intr(void);
 
 // number of elements in fixed-size array
-#define NELEM(x) (sizeof(x) / sizeof((x)[0]))
+#define NELEM(x) (sizeof(x)/sizeof((x)[0]))
+
+// swap.c
+void   swapinit(void);
+void   swapread(uint64 ptr, int blkno);
+void   swapwrite(uint64 ptr, int blkno);
+void   swapstat(int *nr_sectors_read, int *nr_sectors_write);
+int    swap_alloc_slot(void);
+void   swap_free_slot(uint slot);
+void  *swap_out(void);
+int    swap_in(pagetable_t pt, uint64 va);
+
+// lru.c
+void   lruinit(void);
+void   lru_add(pagetable_t pt, uint64 va, uint64 pa);
+void   lru_remove(uint64 pa);
+int    lru_size(void);
+uint64 lru_select_victim(pagetable_t *out_pt, uint64 *out_va);

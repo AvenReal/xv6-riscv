@@ -78,6 +78,7 @@ struct trapframe {
 
 enum procstate { UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 
+
 // Per-process state
 struct proc {
   struct spinlock lock;
@@ -101,4 +102,41 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+
+  int nice; 				   // The nice value of the process
+  uint64 runtime;			   // Actual runtime ticks
+  uint64 vruntime;			   // Virtual runtime
+  uint64 vdeadline;  		   // Virtual deadline
+  int timeslice;			   // Remaining time slice (default = 5)
+  int is_eligible;			   // Egibility flag
 };
+
+struct mmap_area {
+  struct file *f;
+  uint64 addr;
+  int length;
+  int offset;
+  int prot;
+  int flags;
+  struct proc *p;
+};
+
+// Custom syscall
+#pragma once
+int getnice(int pid);
+int setnice(int pid, int value);
+void ps(int pid);
+
+int meminfo(void);
+int waitpid(int pid);
+uint64 mmap(uint64 addr, int length, int prot, int flags, int fd, int offset);
+int munmap(uint64 addr);
+
+// Custom function helping getting the struct proc from a PID
+struct proc* get_proc_from_pid(int pid);
+
+// Custom function that get a process from its index in the proc[] array
+struct proc* get_proc_from_index(int index);
+
+void update_vdeadline(struct proc *p);
+int update_is_eligible(struct proc *p);

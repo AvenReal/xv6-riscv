@@ -47,3 +47,5 @@ void printf(const char *, ...) __attribute__((format(printf, 1, 2)));
 // umalloc.c
 void *malloc(uint);
 void free(void *);
+
+int swapstat(int *nr_sectors_read, int *nr_sectors_write);

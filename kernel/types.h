@@ -8,3 +8,11 @@ typedef unsigned int uint32;
 typedef unsigned long uint64;
 
 typedef uint64 pde_t;
+
+typedef uint64 *pagetable_t; // 512 PTEs
+
+struct page {
+    struct page *next, *prev;
+    pagetable_t  pagetable;
+    uint64       vaddr;
+};
