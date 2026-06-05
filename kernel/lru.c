@@ -94,7 +94,47 @@ lru_size(void)
 void
 lru_add(pagetable_t pt, uint64 va, uint64 pa)
 {
-  // TODO: implement.
+	struct page *p = pa_to_page(pa);
+	acquire(&lru.lock);
+	if (p->pagetable != 0)
+	{
+		if(p->next == p)
+		{
+			lru.head = 0;
+		} 
+		else 
+		{
+			p->prev->next = p->next;
+			p->next->prev = p->prev;
+			if(lru.head == p)
+			{
+				lru.head = p->next;
+			}
+		}
+		p->next = 0;
+	    	p->prev = 0;
+    		p->pagetable = 0;
+		p->vaddr = 0;
+		lru.count-=1;
+	}
+	p->pagetable = pt;
+	p->vaddr = va;
+	if (lru.head == 0)
+	{
+		lru.head = p;
+		p->next = p;
+		p->prev = p;
+	}
+	else
+	{
+		struct page *tail = lru.head->prev;
+		lru.head->prev = p;
+		p->next = lru.head;
+		p->prev = tail;
+		tail->next = p;
+	}
+	lru.count += 1;
+	release(&lru.lock);
 }
 
 //
@@ -119,7 +159,34 @@ lru_add(pagetable_t pt, uint64 va, uint64 pa)
 void
 lru_remove(uint64 pa)
 {
-  // TODO: implement.
+	struct page *p = pa_to_page(pa);
+	acquire(&lru.lock);
+	if(p->pagetable == 0)
+	{
+		release(&lru.lock);
+		return;
+	}
+	
+	if(p->next == p)
+	{
+		lru.head = 0;
+	}
+	else 
+	{
+		p->prev->next = p->next;
+		p->next->prev = p->prev;
+		if(lru.head == p)
+		{
+			lru.head = p->next;
+		}
+	}
+
+	p->pagetable = 0;
+	p->vaddr = 0;
+	p->next = 0;
+	p->prev = 0;
+	lru.count-=1;
+	release(&lru.lock);
 }
 
 //.
@@ -160,6 +227,73 @@ lru_remove(uint64 pa)
 uint64
 lru_select_victim(pagetable_t *out_pt, uint64 *out_va)
 {
-  // TODO: implement.
-  return 0;
+	acquire(&lru.lock);
+	if(lru.head == 0)
+	{
+		release(&lru.lock);
+		return 0;
+	}
+
+	int limit = 2 * lru.count;
+	for(int i = 0; i < limit && lru.head != 0; i++)
+	{
+		struct page *p = lru.head;
+		pte_t *pte = walk(p->pagetable, p->vaddr, 0);
+
+		if(pte == 0 || (*pte & PTE_V) == 0)
+		{
+			if(p->next == p)
+			{
+				lru.head = 0;
+			}
+		      	else 
+			{
+				p->prev->next = p->next;
+				p->next->prev = p->prev;
+				lru.head = p->next;
+			}
+			
+			p->pagetable = 0;
+			p->vaddr = 0;
+			p->next = 0;
+			p->prev = 0;
+			lru.count-=1;
+			continue;
+		}
+		
+		if(*pte & PTE_A)
+		{
+			*pte &= ~PTE_A;
+			sfence_vma();
+			lru.head = p->next;
+			continue;
+		}
+
+		uint64 pa = PTE2PA(*pte);
+		*out_pt = p->pagetable;
+		*out_va = p->vaddr;
+		
+		if(p->next == p)
+		{
+			lru.head = 0;
+		} 
+		else 
+		{
+			p->prev->next = p->next;
+			p->next->prev = p->prev;
+			lru.head = p->next;
+		}
+
+		p->pagetable = 0;
+		p->vaddr = 0;
+		p->next = 0;
+		p->prev = 0;
+		lru.count-=1;
+
+		release(&lru.lock);
+		return pa;
+	}
+
+	release(&lru.lock);
+	return 0;
 }
