@@ -1,0 +1,787 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BackendCodeEditorMiscSettings">
+    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
+    <option name="/Default/Housekeeping/LiveTemplatesHousekeeping/HotspotSessionHintIsShown/@EntryValue" value="true" type="bool" />
+  </component>
+  <component name="CMakeProjectFlavorService">
+    <option name="flavorId" value="CMakePlainProjectFlavor" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="xv6-riscv" targetName="README" />
+      <config projectName="xv6-riscv" targetName="tags" />
+      <config projectName="xv6-riscv" targetName="qemu-gdb" />
+      <config projectName="xv6-riscv" targetName="check-qemu-version" />
+      <config projectName="xv6-riscv" targetName="qemu" />
+      <config projectName="xv6-riscv" targetName="print-gdbport" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="17411c1d-bb1b-4d84-a25f-938ff82d4ba6" name="Changes" comment="done swap_in" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="riscv" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;AvenReal&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/AvenReal/xv6-riscv.git&quot;,
+    &quot;accountId&quot;: &quot;d44f80cc-741e-4cba-a42d-66440da4ab9a&quot;
+  }
+}</component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="Q2zK0TQW" />
+  </component>
+  <component name="MakefileLocalSettings">
+    <option name="availableProjects">
+      <map>
+        <entry>
+          <key>
+            <ExternalProjectPojo>
+              <option name="name" value="xv6-riscv" />
+              <option name="path" value="$PROJECT_DIR$" />
+            </ExternalProjectPojo>
+          </key>
+          <value>
+            <list>
+              <ExternalProjectPojo>
+                <option name="name" value="xv6-riscv" />
+                <option name="path" value="$PROJECT_DIR$" />
+              </ExternalProjectPojo>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="projectSyncType">
+      <map>
+        <entry key="$PROJECT_DIR$" value="RE_IMPORT" />
+      </map>
+    </option>
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.5645636756385768" />
+      <entry key="MS500" value="3.723443847125497" />
+      <entry key="S2" value="5.253809959189999" />
+      <entry key="S5" value="5.756620715971244" />
+      <entry key="S10" value="6.651244962560001" />
+      <entry key="S30" value="10.345581957584903" />
+      <entry key="S60" value="14.105475766636077" />
+      <entry key="M2" value="19.14470590762277" />
+      <entry key="M5" value="25.560434437805913" />
+      <entry key="M10" value="28.846734063288423" />
+      <entry key="M15" value="30.27042846470561" />
+      <entry key="M30" value="37.12496190336311" />
+      <entry key="H1" value="69.28924605515385" />
+      <entry key="H2" value="129.7256846522316" />
+      <entry key="H4" value="190.8280890748182" />
+      <entry key="D1" value="270.671296264682" />
+      <entry key="W1" value="287.99166776797887" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="1.9887195896411977E-262" />
+      <entry key="S30" value="8.362742381561078E-88" />
+      <entry key="S60" value="4.025851344780497E-44" />
+      <entry key="M2" value="2.827998801897277E-22" />
+      <entry key="M5" value="3.836985585239196E-9" />
+      <entry key="M10" value="1.0813308979319238E-4" />
+      <entry key="M15" value="0.0036289255631032917" />
+      <entry key="M30" value="0.13588436952914615" />
+      <entry key="H1" value="0.8817007043130765" />
+      <entry key="H2" value="2.285723190448558" />
+      <entry key="H4" value="3.6974128814825162" />
+      <entry key="D1" value="5.533661104148907" />
+      <entry key="W1" value="5.931015609816886" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="1.365837929245822" />
+      <entry key="MS500" value="3.626078108103023" />
+      <entry key="S2" value="5.22144903331333" />
+      <entry key="S5" value="5.7426894582578045" />
+      <entry key="S10" value="6.643450213547806" />
+      <entry key="S30" value="10.341786723253803" />
+      <entry key="S60" value="14.102878551189116" />
+      <entry key="M2" value="19.14290003167187" />
+      <entry key="M5" value="25.559442674896026" />
+      <entry key="M10" value="28.84627516538659" />
+      <entry key="M15" value="30.27364099536269" />
+      <entry key="M30" value="37.26021887451967" />
+      <entry key="H1" value="70.16942768531294" />
+      <entry key="H2" value="132.0094950524359" />
+      <entry key="H4" value="194.5239615330323" />
+      <entry key="D1" value="276.20457351161826" />
+      <entry key="W1" value="293.9226246041707" />
+    </decayedShown>
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2025" />
+    <option name="minorVersion" value="3.3" />
+    <option name="productBranch" value="Classic" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="3BEmgAY4T2t3NAIRY6TLHZtD4NT" />
+  <component name="ProjectStatusUIService">{
+  &quot;uiKindId&quot;: &quot;Widget&quot;
+}</component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Native Application.qemu.executor": "Debug",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.RadMigrateCodeStyle": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "project4",
+    "last_opened_file_path": "/home/evan/Work/SeoulTech/SeoulTech/Operating System Design/xv6-riscv",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.first.attach.projects": "true",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/user" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Native Application.qemu">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="README" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="README" CONFIG_NAME="README" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="README" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="README" CONFIG_NAME="README" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="README" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="README" CONFIG_NAME="README" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="README" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="README" CONFIG_NAME="README" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="check-qemu-version" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="check-qemu-version" CONFIG_NAME="check-qemu-version" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="check-qemu-version" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="check-qemu-version" CONFIG_NAME="check-qemu-version" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="check-qemu-version" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="check-qemu-version" CONFIG_NAME="check-qemu-version" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="check-qemu-version" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="check-qemu-version" CONFIG_NAME="check-qemu-version" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="print-gdbport" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="print-gdbport" CONFIG_NAME="print-gdbport" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="print-gdbport" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="print-gdbport" CONFIG_NAME="print-gdbport" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="print-gdbport" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="print-gdbport" CONFIG_NAME="print-gdbport" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="print-gdbport" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="print-gdbport" CONFIG_NAME="print-gdbport" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="qemu-gdb" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="qemu-gdb" CONFIG_NAME="qemu-gdb" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="qemu-gdb" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="qemu-gdb" CONFIG_NAME="qemu-gdb" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="qemu-gdb" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="qemu-gdb" CONFIG_NAME="qemu-gdb" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="qemu-gdb" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="qemu-gdb" CONFIG_NAME="qemu-gdb" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="qemu" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="qemu" CONFIG_NAME="qemu" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="qemu" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="qemu" CONFIG_NAME="qemu" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="qemu" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="qemu" CONFIG_NAME="qemu" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="qemu" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="qemu" CONFIG_NAME="qemu" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="tags" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="tags" CONFIG_NAME="tags" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="tags" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="tags" CONFIG_NAME="tags" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="tags" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="tags" CONFIG_NAME="tags" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="tags" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="xv6-riscv" TARGET_NAME="tags" CONFIG_NAME="tags" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Native Application.README" />
+      <item itemvalue="Native Application.check-qemu-version" />
+      <item itemvalue="Native Application.print-gdbport" />
+      <item itemvalue="Native Application.qemu-gdb" />
+      <item itemvalue="Native Application.qemu" />
+      <item itemvalue="Native Application.tags" />
+    </list>
+  </component>
+  <component name="RustProjectSettings">
+    <option name="toolchainHomeDirectory" value="/usr/bin" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="17411c1d-bb1b-4d84-a25f-938ff82d4ba6" name="Changes" comment="" />
+      <created>1774062717574</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1774062717574</updated>
+      <workItem from="1774062724384" duration="5444000" />
+      <workItem from="1774071107097" duration="9637000" />
+      <workItem from="1774083820908" duration="3410000" />
+      <workItem from="1774138729684" duration="3101000" />
+      <workItem from="1774871132174" duration="3401000" />
+      <workItem from="1775629678661" duration="1068000" />
+      <workItem from="1775799385171" duration="1343000" />
+      <workItem from="1775894728100" duration="139000" />
+      <workItem from="1775913380317" duration="1449000" />
+      <workItem from="1776067519628" duration="3776000" />
+      <workItem from="1776216025800" duration="871000" />
+      <workItem from="1776218215698" duration="23462000" />
+      <workItem from="1776315699026" duration="1248000" />
+      <workItem from="1776408106324" duration="3197000" />
+      <workItem from="1777353109933" duration="27000" />
+      <workItem from="1777888228573" duration="450000" />
+      <workItem from="1777957256414" duration="9151000" />
+      <workItem from="1778388775657" duration="6909000" />
+      <workItem from="1778645963151" duration="11989000" />
+      <workItem from="1778892910376" duration="284000" />
+      <workItem from="1780638512827" duration="9830000" />
+    </task>
+    <task id="LOCAL-00001" summary="Created the system calls">
+      <option name="closed" value="true" />
+      <created>1774064382322</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1774064382322</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Created the system calls">
+      <option name="closed" value="true" />
+      <created>1774064387367</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1774064387367</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Created the system calls">
+      <option name="closed" value="true" />
+      <created>1774064727695</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1774064727695</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Created the system calls">
+      <option name="closed" value="true" />
+      <created>1774064803813</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1774064803813</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Added get_proc_from_pid">
+      <option name="closed" value="true" />
+      <created>1774066786050</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1774066786050</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Added get_proc_from_pid">
+      <option name="closed" value="true" />
+      <created>1774066852589</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1774066852589</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Finished (not tested) 3/5 syscall">
+      <option name="closed" value="true" />
+      <created>1774078384242</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1774078384243</updated>
+    </task>
+    <task id="LOCAL-00008" summary="moved custom syscall to proc.c">
+      <option name="closed" value="true" />
+      <created>1774084475548</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1774084475548</updated>
+    </task>
+    <task id="LOCAL-00009" summary="fixed">
+      <option name="closed" value="true" />
+      <created>1774085428573</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1774085428573</updated>
+    </task>
+    <task id="LOCAL-00010" summary="tiny change">
+      <option name="closed" value="true" />
+      <created>1774138931950</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1774138931951</updated>
+    </task>
+    <task id="LOCAL-00011" summary="removed useless comment">
+      <option name="closed" value="true" />
+      <created>1774139656591</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1774139656591</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Optimised waitpid">
+      <option name="closed" value="true" />
+      <created>1774871708711</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1774871708711</updated>
+    </task>
+    <task id="LOCAL-00013" summary="update vruntime and vdeadline done">
+      <option name="closed" value="true" />
+      <created>1776216376633</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1776216376633</updated>
+    </task>
+    <task id="LOCAL-00014" summary="added lag value formula">
+      <option name="closed" value="true" />
+      <created>1776221340435</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1776221340435</updated>
+    </task>
+    <task id="LOCAL-00015" summary="added update_is_eligible">
+      <option name="closed" value="true" />
+      <created>1776222215611</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1776222215611</updated>
+    </task>
+    <task id="LOCAL-00016" summary="added update_is_eligible">
+      <option name="closed" value="true" />
+      <created>1776222229393</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1776222229393</updated>
+    </task>
+    <task id="LOCAL-00017" summary="updated ps">
+      <option name="closed" value="true" />
+      <created>1776224391851</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1776224391851</updated>
+    </task>
+    <task id="LOCAL-00018" summary="updated ps">
+      <option name="closed" value="true" />
+      <created>1776224492543</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1776224492543</updated>
+    </task>
+    <task id="LOCAL-00019" summary="updated ps">
+      <option name="closed" value="true" />
+      <created>1776224512453</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1776224512453</updated>
+    </task>
+    <task id="LOCAL-00020" summary="tiny changes">
+      <option name="closed" value="true" />
+      <created>1776243756215</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1776243756215</updated>
+    </task>
+    <task id="LOCAL-00021" summary="LeRobbii changes">
+      <option name="closed" value="true" />
+      <created>1776244289621</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1776244289621</updated>
+    </task>
+    <task id="LOCAL-00022" summary="added test files">
+      <option name="closed" value="true" />
+      <created>1776247675362</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1776247675362</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Fixed egibility reset">
+      <option name="closed" value="true" />
+      <created>1776249773099</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1776249773099</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Tiny changes">
+      <option name="closed" value="true" />
+      <created>1776316936306</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1776316936306</updated>
+    </task>
+    <task id="LOCAL-00025" summary="updated ps">
+      <option name="closed" value="true" />
+      <created>1776412748391</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1776412748391</updated>
+    </task>
+    <task id="LOCAL-00026" summary="updated ps">
+      <option name="closed" value="true" />
+      <created>1776413279686</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1776413279686</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Added project 3 system calls">
+      <option name="closed" value="true" />
+      <created>1777960357387</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1777960357389</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Syscall implementation fix">
+      <option name="closed" value="true" />
+      <created>1777963046440</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1777963046440</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Added struct mmap_area">
+      <option name="closed" value="true" />
+      <created>1777966990711</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1777966990711</updated>
+    </task>
+    <task id="LOCAL-00030" summary="mmap done ?">
+      <option name="closed" value="true" />
+      <created>1778399933778</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1778399933780</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Added test + changed mmap">
+      <option name="closed" value="true" />
+      <created>1778652244764</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1778652244764</updated>
+    </task>
+    <task id="LOCAL-00032" summary="brocken">
+      <option name="closed" value="true" />
+      <created>1778653997208</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1778653997208</updated>
+    </task>
+    <task id="LOCAL-00033" summary="broken v2">
+      <option name="closed" value="true" />
+      <created>1778655653255</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1778655653256</updated>
+    </task>
+    <task id="LOCAL-00034" summary="broken v3">
+      <option name="closed" value="true" />
+      <created>1778658270551</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1778658270551</updated>
+    </task>
+    <task id="LOCAL-00035" summary="broken v4">
+      <option name="closed" value="true" />
+      <created>1778659481033</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1778659481033</updated>
+    </task>
+    <task id="LOCAL-00036" summary="+const">
+      <option name="closed" value="true" />
+      <created>1780638710911</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1780638710911</updated>
+    </task>
+    <task id="LOCAL-00037" summary="+const">
+      <option name="closed" value="true" />
+      <created>1780638738131</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1780638738131</updated>
+    </task>
+    <task id="LOCAL-00038" summary="+const">
+      <option name="closed" value="true" />
+      <created>1780638827654</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1780638827654</updated>
+    </task>
+    <task id="LOCAL-00039" summary="+const">
+      <option name="closed" value="true" />
+      <created>1780639460958</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1780639460958</updated>
+    </task>
+    <task id="LOCAL-00040" summary="removed useless readme">
+      <option name="closed" value="true" />
+      <created>1780639506241</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1780639506241</updated>
+    </task>
+    <task id="LOCAL-00041" summary="README.md instructions">
+      <option name="closed" value="true" />
+      <created>1780640074732</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1780640074732</updated>
+    </task>
+    <task id="LOCAL-00042" summary="README.md instructions">
+      <option name="closed" value="true" />
+      <created>1780640165144</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1780640165144</updated>
+    </task>
+    <task id="LOCAL-00043" summary="WTF">
+      <option name="closed" value="true" />
+      <created>1780640454026</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1780640454026</updated>
+    </task>
+    <task id="LOCAL-00044" summary="fix">
+      <option name="closed" value="true" />
+      <created>1780641043996</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1780641043996</updated>
+    </task>
+    <task id="LOCAL-00045" summary="auto make clean">
+      <option name="closed" value="true" />
+      <created>1780641327102</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1780641327102</updated>
+    </task>
+    <task id="LOCAL-00046" summary="done swap_out">
+      <option name="closed" value="true" />
+      <created>1780642174308</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1780642174308</updated>
+    </task>
+    <task id="LOCAL-00047" summary="done swap_in">
+      <option name="closed" value="true" />
+      <created>1780642364357</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1780642364357</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="added lag value formula" />
+    <MESSAGE value="added update_is_eligible" />
+    <MESSAGE value="tiny changes" />
+    <MESSAGE value="LeRobbii changes" />
+    <MESSAGE value="added test files" />
+    <MESSAGE value="Fixed egibility reset" />
+    <MESSAGE value="Tiny changes" />
+    <MESSAGE value="updated ps" />
+    <MESSAGE value="Added project 3 system calls" />
+    <MESSAGE value="Syscall implementation fix" />
+    <MESSAGE value="Added struct mmap_area" />
+    <MESSAGE value="mmap done ?" />
+    <MESSAGE value="Added test + changed mmap" />
+    <MESSAGE value="brocken" />
+    <MESSAGE value="broken v2" />
+    <MESSAGE value="broken v3" />
+    <MESSAGE value="broken v4" />
+    <MESSAGE value="+const" />
+    <MESSAGE value="removed useless readme" />
+    <MESSAGE value="README.md instructions" />
+    <MESSAGE value="WTF" />
+    <MESSAGE value="fix" />
+    <MESSAGE value="auto make clean" />
+    <MESSAGE value="done swap_out" />
+    <MESSAGE value="done swap_in" />
+    <option name="LAST_COMMIT_MESSAGE" value="done swap_in" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
