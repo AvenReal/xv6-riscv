@@ -122,7 +122,7 @@ lru_remove(uint64 pa)
   // TODO: implement.
 }
 
-//
+//.
 // lru_select_victim:
 //   The clock-algorithm core.  Walk the list from lru.head; for each
 //   candidate, look at the owning PTE's PTE_A bit:
