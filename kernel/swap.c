@@ -291,8 +291,44 @@ swap_out(void)
 //   Return 0 on success.
 //
 int
-swap_in(pagetable_t pt, uint64 va)
-{
-  // TODO: implement.
-  return -1;
+swap_in(pagetable_t pt, uint64 va) {
+  va = PGROUNDDOWN(va);
+
+  // 2. Find PTE.
+  pte_t *pte = walk(pt, va, 0);
+  if (pte == 0)
+    return -1;
+
+  // Must be swapped out.
+  if ((*pte & PTE_V) || !(*pte & PTE_S))
+    return -1;
+
+  // 3. Extract slot number.
+  int slot = PTE2SLOT(*pte);
+
+  // Save original permissions.
+  uint64 flags = PTE_FLAGS(*pte);
+
+  // 4. Allocate physical frame.
+  void *pa = kalloc();
+  if (pa == 0)
+    return -1;
+
+  // 5. Read page from swap and release slot.
+  swapread((uint64) pa, slot);
+  swap_free_slot(slot);
+
+  // 6. Rewrite PTE.
+  flags &= ~PTE_S;
+  flags |= PTE_V;
+
+  *pte = PA2PTE((uint64)pa) | flags;
+
+  // 7. Reinsert into LRU.
+  lru_add(pt, va, (uint64) pa);
+
+  // 8. Flush stale translation.
+  sfence_vma();
+
+  return 0;
 }
