@@ -361,6 +361,7 @@ typedef uint64 pte_t;
 #define PTE_X (1L << 3)
 #define PTE_U (1L << 4) // user can access
 #define PTE_S (1L << 8)
+#define PTE_A (1L << 6)
 #define SLOT2PTE(slot) PA2PTE((uint64)(slot) << 12)
 #define PTE2SLOT(pte)  ((uint)(PTE2PA(pte) >> 12))
 
@@ -383,6 +384,5 @@ typedef uint64 pte_t;
 // that have the high bit set.
 #define MAXVA (1L << (9 + 9 + 9 + 12 - 1))
 
-#define PTE_S (1L << 8)
 #define SLOT2PTE(slot) PA2PTE((uint64)(slot) << 12)
 #define PTE2SLOT(pte)  ((uint)(PTE2PA(pte) >> 12))

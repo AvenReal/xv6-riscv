@@ -207,8 +207,47 @@ swapstat(int *nr_sectors_read, int *nr_sectors_write)
 void *
 swap_out(void)
 {
-  // TODO: implement.
-  return 0;
+  pagetable_t pt;
+  uint64 va;
+
+  // 1. Select victim from LRU.
+  uint64 pa = lru_select_victim(&pt, &va);
+  if (pa == 0)
+    return 0;
+
+  // 2. Allocate swap slot.
+  int slot = swap_alloc_slot();
+  if (slot < 0) {
+    // restore victim to LRU
+    lru_add(pt, va, pa);
+    return 0;
+  }
+
+  // 3. Write page contents to swap.
+  swapwrite(pa, slot);
+
+  // 4. Rewrite victim PTE.
+  pte_t *pte = walk(pt, va, 0);
+  if (pte == 0) {
+    swap_free_slot(slot);
+    lru_add(pt, va, pa);
+    return 0;
+  }
+
+  uint64 flags = PTE_FLAGS(*pte);
+
+  // Preserve user permissions, remove residency bits.
+  flags &= ~(PTE_V | PTE_A);
+
+  *pte = SLOT2PTE(slot) |
+         flags |
+         PTE_S;
+
+  // Optional but usually correct after changing a valid mapping.
+  sfence_vma();
+
+  // 5. Return freed physical frame.
+  return (void *) pa;
 }
 
 //
