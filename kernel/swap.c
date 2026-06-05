@@ -300,7 +300,8 @@ swap_in(pagetable_t pt, uint64 va) {
     return -1;
 
   // Must be swapped out.
-  if ((*pte & PTE_V) || !(*pte & PTE_S))
+  //if ((*pte & PTE_V) || !(*pte & PTE_S))
+  if((*pte & PTE_V) || ((*pte & PTE_S) == 0))
     return -1;
 
   // 3. Extract slot number.
@@ -319,7 +320,8 @@ swap_in(pagetable_t pt, uint64 va) {
   swap_free_slot(slot);
 
   // 6. Rewrite PTE.
-  flags &= ~PTE_S;
+  //flags &= ~PTE_S;
+  flags &= ~(PTE_S | PTE_A);
   flags |= PTE_V;
 
   *pte = PA2PTE((uint64)pa) | flags;

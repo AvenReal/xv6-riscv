@@ -76,6 +76,10 @@ kalloc(void)
     kmem.freelist = r->next;
   release(&kmem.lock);
 
+  if(r == 0){
+    r = (struct run *)swap_out();
+  }
+
   if(r)
     memset((char*)r, 5, PGSIZE); // fill with junk
   return (void*)r;

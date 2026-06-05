@@ -128,10 +128,10 @@ lru_add(pagetable_t pt, uint64 va, uint64 pa)
 	else
 	{
 		struct page *tail = lru.head->prev;
-		lru.head->prev = p;
 		p->next = lru.head;
 		p->prev = tail;
 		tail->next = p;
+		lru.head->prev = p;
 	}
 	lru.count += 1;
 	release(&lru.lock);
