@@ -8,6 +8,8 @@ OBJS = \
   $K/printf.o \
   $K/uart.o \
   $K/kalloc.o \
+  $K/swap.o\
+  $K/lru.o\
   $K/spinlock.o \
   $K/string.o \
   $K/main.o \
