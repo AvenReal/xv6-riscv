@@ -108,67 +108,6 @@ sys_uptime(void)
   return xticks;
 }
 
-
-
-uint64 sys_getnice(void) {
-  int pid;
-  argint(0, &pid);
-
-  return getnice(pid);
-}
-
-uint64 sys_setnice(void) {
-  int pid, value;
-  argint(0, &pid);
-  argint(1, &value);
-
-  return setnice(pid, value);
-}
-
-uint64 sys_ps(void) {
-  int pid;
-  argint(0, &pid);
-
-  ps(pid);
-  return 0;
-}
-
-uint64 sys_meminfo(void) {
-  return meminfo();
-}
-
-uint64 sys_waitpid(void) {
-  int pid;
-  argint(0, &pid);
-
-  return waitpid(pid);
-}
-
-
-uint64 sys_mmap(void) {
-  int length, prot, flags, fd, offset;
-  uint64 addr;
-  argaddr(0, &addr);
-  argint(1, &length);
-  argint(2, &prot);
-  argint(3, &flags);
-  argint(4, &offset);
-  argint(5, &fd);
-
-  return mmap(addr, length, prot, flags, fd, offset);
-}
-
-uint64 sys_munmap(void) {
-  uint64 addr;
-  argaddr(0, &addr);
-
-  return munmap(addr);
-}
-
-uint64 sys_freemem(void) {
-  return freemem();
-}
-
 uint64
 sys_swapstat(void) {
   uint64 ra_addr, wa_addr;

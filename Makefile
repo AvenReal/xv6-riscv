@@ -147,10 +147,6 @@ UPROGS=\
 	$U/_logstress\
 	$U/_forphan\
 	$U/_dorphan\
-	$U/_tcfs\
-	$U/_tni\
-	$U/_tnw\
-	$U/_tvr\
 	$U/_pa4_test\
 
 fs.img: mkfs/mkfs README $(UPROGS)
